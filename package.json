@@ -1,0 +1,12 @@
+{
+  "name": "pixel-dream-homepage",
+  "private": true,
+  "version": "1.0.0",
+  "description": "王塨钰的个人主页 —— 像素梦核风格 GitHub Pages",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.2.0"
+  }
+}
