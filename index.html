@@ -3,257 +3,846 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>王塨钰 · 像素梦境存档 | 内容运营 / 广告学硕士</title>
-<meta name="description" content="王塨钰的个人主页 —— 中国传媒大学广告学硕士，内容运营。小红书 / 阿里 / 百度实习经历。一份像素与梦境构成的存档。">
-<meta property="og:title" content="王塨钰 · 像素梦境存档">
-<meta property="og:description" content="内容运营 × 广告学硕士 × 二次元住民。SAVE FILE LOADED ▶">
-<meta name="theme-color" content="#1d1436">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9'%3E%3Crect x='4' y='0' width='1' height='1' fill='%23e8c95a'/%3E%3Crect x='3' y='1' width='3' height='1' fill='%23e8c95a'/%3E%3Crect x='1' y='3' width='2' height='1' fill='%23e8c95a'/%3E%3Crect x='6' y='3' width='2' height='1' fill='%23e8c95a'/%3E%3Crect x='3' y='3' width='3' height='3' fill='%23fff3b0'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%23e8c95a'/%3E%3Crect x='8' y='4' width='1' height='1' fill='%23e8c95a'/%3E%3Crect x='3' y='6' width='3' height='1' fill='%23e8c95a'/%3E%3Crect x='4' y='7' width='1' height='2' fill='%23e8c95a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css">
+<title>王塨钰 · 像素夜空 | 内容运营</title>
+<meta name="description" content="王塨钰的个人主页 —— 中国传媒大学广告学硕士在读，内容运营。小红书 / 阿里巴巴 / 百度实习经历。一片以深蓝、暗灰与纯白绘制的像素夜空。">
+<meta property="og:title" content="王塨钰 · 像素夜空">
+<meta property="og:description" content="内容运营 × 广告学硕士。小红书 / 阿里巴巴 / 百度实习经历。">
+<meta name="theme-color" content="#070b16">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9' shape-rendering='crispEdges'%3E%3Crect x='4' y='0' width='1' height='1' fill='%23ffffff'/%3E%3Crect x='3' y='1' width='3' height='1' fill='%23ffffff'/%3E%3Crect x='2' y='2' width='5' height='1' fill='%23ffffff'/%3E%3Crect x='2' y='3' width='2' height='1' fill='%23ffffff'/%3E%3Crect x='4' y='3' width='1' height='1' fill='%239aa9cc'/%3E%3Crect x='5' y='3' width='2' height='1' fill='%23ffffff'/%3E%3Crect x='1' y='4' width='4' height='1' fill='%23ffffff'/%3E%3Crect x='5' y='4' width='1' height='1' fill='%239aa9cc'/%3E%3Crect x='6' y='4' width='1' height='1' fill='%23ffffff'/%3E%3Crect x='1' y='5' width='6' height='1' fill='%23ffffff'/%3E%3Crect x='2' y='6' width='5' height='1' fill='%23ffffff'/%3E%3Crect x='3' y='7' width='3' height='1' fill='%23ffffff'/%3E%3Crect x='4' y='8' width='1' height='1' fill='%23ffffff'/%3E%3C/svg%3E">
+<style>
+/* ============ 像素夜空 · 仅用深蓝 / 暗灰 / 纯白 ============ */
+:root{
+  --bg0:#070b16;
+  --panel:rgba(11,16,30,.74);
+  --line:#223357;
+  --line-soft:#1a2745;
+  --txt:#e9eef9;
+  --dim:#96a5c6;
+  --faint:#5d6d92;
+  --white:#ffffff;
+  --px:'Fusion Pixel','PingFang SC','Microsoft YaHei',sans-serif;
+  --body:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+}
+@font-face{
+  font-family:'Fusion Pixel';
+  src:url('assets/fonts/fusion-pixel.woff2') format('woff2');
+  font-display:swap;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg0);
+  color:var(--txt);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.8;
+  overflow-x:hidden;
+}
+::selection{background:#dbe6ff;color:#0a0f1e}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#0a0f1e}
+::-webkit-scrollbar-thumb{background:#223357;border:2px solid #0a0f1e}
+::-webkit-scrollbar-thumb:hover{background:#34487a}
+a{color:var(--txt);text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px dashed #dbe6ff;outline-offset:3px}
+
+/* ---- 背景画布与粒子画布 ---- */
+#sky{
+  position:fixed;inset:0;width:100%;height:100%;
+  image-rendering:pixelated;image-rendering:crisp-edges;
+  z-index:-1;display:block;
+}
+#dust{position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none}
+
+/* ---- 导航 ---- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  height:56px;padding:0 22px;
+  background:rgba(7,11,22,.62);
+  border-bottom:1px solid var(--line-soft);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.nav-logo{font-family:var(--px);font-size:12px;letter-spacing:2px;display:flex;align-items:center;gap:8px}
+.nav-logo svg{flex:none}
+.nav-links{display:flex;gap:4px}
+.nav-links a{
+  font-size:13px;color:var(--dim);padding:6px 12px;letter-spacing:1px;
+  border:1px solid transparent;transition:color .2s,border-color .2s;
+}
+.nav-links a:hover{color:var(--white);border-color:var(--line)}
+
+/* ---- 首屏 ---- */
+.hero{
+  min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:96px 24px 64px;position:relative;
+}
+.hero-micro{
+  font-family:var(--px);font-size:12px;color:var(--dim);letter-spacing:4px;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 12px;
+  max-width:100%;margin-bottom:28px;
+}
+.hero-name{
+  font-family:var(--px);font-weight:400;
+  font-size:clamp(36px,7vw,72px);
+  line-height:1.3;letter-spacing:.14em;color:var(--white);
+  text-shadow:0 0 18px rgba(220,232,255,.28);
+}
+.hero-roman{
+  font-family:var(--px);font-size:12px;color:var(--faint);
+  letter-spacing:6px;margin-top:16px;
+}
+.hero-sub{margin-top:22px;font-size:17px;color:var(--dim);letter-spacing:2px;width:100%;max-width:34em}
+.hero-mail{
+  margin-top:34px;display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--px);font-size:12px;letter-spacing:1px;
+  padding:12px 20px;border:1px solid var(--line);background:var(--panel);
+  transition:border-color .2s,box-shadow .2s;
+}
+.hero-mail:hover{border-color:#dbe6ff;box-shadow:0 0 14px rgba(219,230,255,.18)}
+.hero-mail svg{flex:none}
+.scroll-cue{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  font-family:var(--px);font-size:12px;color:var(--faint);letter-spacing:3px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.scroll-cue .arr{animation:bob 2.4s steps(4) infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---- 区块通用 ---- */
+.section{padding:110px 24px 40px;max-width:860px;margin:0 auto}
+.sec-title{
+  font-family:var(--px);font-weight:400;font-size:24px;letter-spacing:.12em;
+  display:flex;align-items:center;gap:14px;margin-bottom:14px;color:var(--white);
+}
+.sec-title em{
+  font-style:normal;font-size:12px;color:var(--faint);letter-spacing:4px;
+}
+.sec-rule{height:8px;margin:0 0 42px;
+  background:repeating-conic-gradient(var(--line) 0% 25%,transparent 0% 50%);
+  background-size:4px 4px;opacity:.45;
+  -webkit-mask-image:linear-gradient(90deg,#000 0 64%,transparent);
+  mask-image:linear-gradient(90deg,#000 0 64%,transparent);
+}
+.card{
+  background:var(--panel);border:1px solid var(--line);
+  padding:26px 28px;position:relative;
+}
+.card::before,.card::after{
+  content:'';position:absolute;width:5px;height:5px;background:var(--line);
+}
+.card::before{top:-1px;left:-1px}
+.card::after{bottom:-1px;right:-1px}
+
+/* ---- 关于 ---- */
+.about-text{color:var(--dim);max-width:46em}
+.about-text b{color:var(--txt);font-weight:600}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}
+.stat{border:1px solid var(--line);background:var(--panel);padding:16px 12px;text-align:center}
+.stat .n{font-family:var(--px);font-size:24px;color:var(--white);line-height:1.4}
+.stat .l{font-size:12px;color:var(--faint);margin-top:6px;letter-spacing:1px}
+
+/* ---- 时间线（教育 / 实习） ---- */
+.tl{border-left:2px solid var(--line-soft);display:flex;flex-direction:column;gap:30px}
+.tl-item{position:relative;padding-left:30px}
+.tl-item::before{
+  content:'';position:absolute;left:-7px;top:8px;width:12px;height:12px;
+  background:var(--line);
+}
+.tl-item.now::before{background:var(--white);box-shadow:0 0 10px rgba(255,255,255,.55)}
+.tl-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px}
+.tl-head h3{font-family:var(--px);font-weight:400;font-size:18px;letter-spacing:.08em;color:var(--white)}
+.tl-role{font-size:14px;color:var(--dim)}
+.tl-time{font-family:var(--px);font-size:12px;color:var(--faint);letter-spacing:1px;margin-left:auto}
+.tag{
+  font-family:var(--px);font-size:12px;color:var(--dim);
+  border:1px solid var(--line);padding:2px 8px;letter-spacing:1px;white-space:nowrap;
+}
+.tl-body{margin-top:12px;color:var(--dim);font-size:15px}
+.tl-body ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.tl-body li{position:relative;padding-left:18px}
+.tl-body li::before{
+  content:'';position:absolute;left:0;top:.72em;width:6px;height:6px;background:var(--faint);
+}
+.tl-body b{color:var(--txt);font-weight:600}
+.tl-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.tl-stats span{
+  font-family:var(--px);font-size:12px;color:var(--txt);
+  border:1px solid var(--line);background:rgba(17,26,48,.6);
+  padding:6px 12px;letter-spacing:1px;
+}
+.tl-sub{color:var(--faint);font-size:14px;margin-top:6px}
+.courses{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.courses span{font-size:13px;color:var(--dim);border:1px solid var(--line-soft);padding:3px 10px}
+
+/* ---- 项目与荣誉 ---- */
+.award-list{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:0}
+.award-list li{
+  display:flex;gap:16px;align-items:baseline;
+  padding:13px 4px;border-bottom:1px dashed var(--line-soft);font-size:15px;
+}
+.award-list li:last-child{border-bottom:none}
+.award-list .d{font-family:var(--px);font-size:12px;color:var(--faint);flex:none;width:74px;letter-spacing:1px}
+.award-list .n{color:var(--txt)}
+.award-list .r{color:var(--dim);margin-left:auto;text-align:right;font-size:14px}
+
+/* ---- 技能 ---- */
+.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.skill{border:1px solid var(--line);background:var(--panel);padding:18px 20px;display:flex;align-items:baseline;gap:16px}
+.skill .k{font-family:var(--px);font-size:12px;color:var(--faint);letter-spacing:2px;flex:none;width:44px}
+.skill .v{font-size:15px;color:var(--txt)}
+
+/* ---- 联络 / 页脚 ---- */
+.contact-box{text-align:center;padding:60px 28px}
+.contact-mail{
+  font-family:var(--px);font-size:clamp(14px,3vw,24px);letter-spacing:2px;color:var(--white);
+  display:inline-flex;align-items:center;gap:14px;padding:18px 30px;
+  border:1px solid var(--line);background:var(--panel);
+  transition:border-color .2s,box-shadow .2s;
+}
+.contact-mail:hover{border-color:#dbe6ff;box-shadow:0 0 20px rgba(219,230,255,.2)}
+.contact-note{margin-top:20px;color:var(--faint);font-size:14px;letter-spacing:1px}
+.footer{
+  margin-top:100px;padding:34px 24px 42px;text-align:center;
+  border-top:1px solid var(--line-soft);color:var(--faint);font-size:13px;
+  display:flex;flex-direction:column;gap:10px;align-items:center;
+}
+.footer .px{font-family:var(--px);font-size:12px;letter-spacing:2px}
+.footer a{color:var(--dim)}
+.footer a:hover{color:var(--white)}
+
+/* ---- 入场动画（steps 营造 8-bit 顿挫感） ---- */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s steps(8),transform .6s steps(8)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:720px){
+  .nav-links{display:none}
+  .hero-micro{letter-spacing:2px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .skill-grid{grid-template-columns:1fr}
+  .tl-time{margin-left:0;width:100%}
+  .section{padding:84px 18px 30px}
+  .award-list li{flex-wrap:wrap}
+  .award-list .r{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{transition:none;opacity:1;transform:none}
+  .scroll-cue .arr{animation:none}
+}
+</style>
 </head>
 <body>
 
-<!-- ======= NAV ======= -->
+<canvas id="sky" aria-hidden="true"></canvas>
+<canvas id="dust" aria-hidden="true"></canvas>
+
+<!-- ======= 导航 ======= -->
 <nav class="nav" aria-label="主导航">
-  <a class="nav-logo" href="#top">G·Y<span class="nav-logo-dot">存档</span></a>
+  <a class="nav-logo" href="#top">
+    <svg width="14" height="14" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#fff"/><rect x="0" y="4" width="9" height="1" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#fff"/><rect x="2" y="4" width="1" height="1" fill="#96a5c6"/><rect x="6" y="4" width="1" height="1" fill="#96a5c6"/><rect x="4" y="2" width="1" height="1" fill="#96a5c6"/><rect x="4" y="6" width="1" height="1" fill="#96a5c6"/></svg>
+    WANG&nbsp;GONGYU
+  </a>
   <div class="nav-links">
-    <a href="#about">档案</a>
+    <a href="#about">关于</a>
     <a href="#edu">教育</a>
     <a href="#exp">实习</a>
-    <a href="#quest">项目</a>
-    <a href="#trophy">荣誉</a>
+    <a href="#proj">项目</a>
     <a href="#skill">技能</a>
     <a href="#contact">联络</a>
   </div>
-  <button id="crt-toggle" class="nav-btn" aria-label="切换扫描线滤镜" title="CRT 滤镜">◐</button>
 </nav>
 
-<!-- ======= HERO ======= -->
+<!-- ======= 首屏 ======= -->
 <header class="hero" id="top">
-  <canvas id="stars" aria-hidden="true"></canvas>
-
-  <div class="hero-sun" aria-hidden="true"><svg id="sun" viewBox="0 0 17 17" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="0" width="1" height="1" fill="#ffd76e"/><rect x="5" y="1" width="7" height="1" fill="#ffd76e"/><rect x="3" y="2" width="11" height="1" fill="#ffd76e"/><rect x="2" y="3" width="13" height="1" fill="#ffd76e"/><rect x="2" y="4" width="13" height="1" fill="#ffd76e"/><rect x="1" y="5" width="15" height="1" fill="#ffd76e"/><rect x="1" y="6" width="15" height="1" fill="#ffd76e"/><rect x="1" y="7" width="15" height="1" fill="#ffd76e"/><rect x="0" y="8" width="17" height="1" fill="#ffd76e"/><rect x="1" y="9" width="15" height="1" fill="#ffd76e"/><rect x="1" y="10" width="15" height="1" fill="#ffd76e"/><rect x="1" y="11" width="15" height="1" fill="#ffd76e"/><rect x="2" y="12" width="13" height="1" fill="#ffd76e"/><rect x="2" y="13" width="13" height="1" fill="#ffd76e"/><rect x="3" y="14" width="11" height="1" fill="#ffd76e"/><rect x="5" y="15" width="7" height="1" fill="#ffd76e"/><rect x="8" y="16" width="1" height="1" fill="#ffd76e"/><rect x="4" y="7" width="2" height="1" fill="#3a2a52"/><rect x="3" y="8" width="1" height="1" fill="#3a2a52"/><rect x="6" y="8" width="1" height="1" fill="#3a2a52"/><rect x="11" y="7" width="2" height="1" fill="#3a2a52"/><rect x="10" y="8" width="1" height="1" fill="#3a2a52"/><rect x="13" y="8" width="1" height="1" fill="#3a2a52"/><rect x="7" y="10" width="3" height="1" fill="#3a2a52"/><rect x="6" y="11" width="1" height="1" fill="#3a2a52"/><rect x="10" y="11" width="1" height="1" fill="#3a2a52"/><rect x="3" y="10" width="2" height="1" fill="#ffb26b"/><rect x="12" y="10" width="2" height="1" fill="#ffb26b"/></svg></div>
-  <div class="hero-moon" aria-hidden="true"><svg id="moon" viewBox="0 0 13 13" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="0" width="1" height="1" fill="#fdf3c0"/><rect x="3" y="1" width="3" height="1" fill="#fdf3c0"/><rect x="2" y="2" width="3" height="1" fill="#fdf3c0"/><rect x="1" y="3" width="3" height="1" fill="#fdf3c0"/><rect x="1" y="4" width="3" height="1" fill="#fdf3c0"/><rect x="1" y="5" width="3" height="1" fill="#fdf3c0"/><rect x="0" y="6" width="4" height="1" fill="#fdf3c0"/><rect x="1" y="7" width="3" height="1" fill="#fdf3c0"/><rect x="1" y="8" width="4" height="1" fill="#fdf3c0"/><rect x="1" y="9" width="5" height="1" fill="#fdf3c0"/><rect x="2" y="10" width="5" height="1" fill="#fdf3c0"/><rect x="3" y="11" width="7" height="1" fill="#fdf3c0"/><rect x="6" y="12" width="1" height="1" fill="#fdf3c0"/></svg></div>
-
-  <div class="cloud c1" aria-hidden="true"><svg class="cloud" viewBox="0 0 18 6" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="0" width="6" height="1" fill="#8a7bb8"/><rect x="4" y="1" width="2" height="1" fill="#8a7bb8"/><rect x="6" y="1" width="6" height="1" fill="#fdfaff"/><rect x="12" y="1" width="2" height="1" fill="#8a7bb8"/><rect x="2" y="2" width="2" height="1" fill="#8a7bb8"/><rect x="4" y="2" width="10" height="1" fill="#fdfaff"/><rect x="14" y="2" width="2" height="1" fill="#8a7bb8"/><rect x="1" y="3" width="1" height="1" fill="#8a7bb8"/><rect x="2" y="3" width="14" height="1" fill="#fdfaff"/><rect x="16" y="3" width="1" height="1" fill="#8a7bb8"/><rect x="0" y="4" width="1" height="1" fill="#8a7bb8"/><rect x="1" y="4" width="16" height="1" fill="#fdfaff"/><rect x="17" y="4" width="1" height="1" fill="#8a7bb8"/><rect x="1" y="5" width="16" height="1" fill="#8a7bb8"/></svg></div>
-  <div class="cloud c2" aria-hidden="true"><svg class="cloud cloud-s" viewBox="0 0 12 4" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="0" width="6" height="1" fill="#8a7bb8"/><rect x="1" y="1" width="2" height="1" fill="#8a7bb8"/><rect x="3" y="1" width="6" height="1" fill="#fdfaff"/><rect x="9" y="1" width="2" height="1" fill="#8a7bb8"/><rect x="0" y="2" width="1" height="1" fill="#8a7bb8"/><rect x="1" y="2" width="10" height="1" fill="#fdfaff"/><rect x="11" y="2" width="1" height="1" fill="#8a7bb8"/><rect x="1" y="3" width="10" height="1" fill="#8a7bb8"/></svg></div>
-  <div class="cloud c3" aria-hidden="true"><svg class="cloud" viewBox="0 0 18 6" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="0" width="6" height="1" fill="#8a7bb8"/><rect x="4" y="1" width="2" height="1" fill="#8a7bb8"/><rect x="6" y="1" width="6" height="1" fill="#fdfaff"/><rect x="12" y="1" width="2" height="1" fill="#8a7bb8"/><rect x="2" y="2" width="2" height="1" fill="#8a7bb8"/><rect x="4" y="2" width="10" height="1" fill="#fdfaff"/><rect x="14" y="2" width="2" height="1" fill="#8a7bb8"/><rect x="1" y="3" width="1" height="1" fill="#8a7bb8"/><rect x="2" y="3" width="14" height="1" fill="#fdfaff"/><rect x="16" y="3" width="1" height="1" fill="#8a7bb8"/><rect x="0" y="4" width="1" height="1" fill="#8a7bb8"/><rect x="1" y="4" width="16" height="1" fill="#fdfaff"/><rect x="17" y="4" width="1" height="1" fill="#8a7bb8"/><rect x="1" y="5" width="16" height="1" fill="#8a7bb8"/></svg></div>
-
-  <div class="float-win w1" aria-hidden="true"><i></i></div>
-  <div class="float-win w2" aria-hidden="true"><i></i></div>
-
-  <div class="dream-txt d1" aria-hidden="true">loading memory…</div>
-  <div class="dream-txt d2" aria-hidden="true">you are dreaming</div>
-  <div class="dream-txt d3" aria-hidden="true">夢</div>
-
-  <div class="hero-stage">
-    <div class="hero-ghost" aria-hidden="true"><svg id="ghost" viewBox="0 0 17 15" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="0" width="6" height="1" fill="#3a2a52"/><rect x="3" y="1" width="2" height="1" fill="#3a2a52"/><rect x="5" y="1" width="6" height="1" fill="#fff8ee"/><rect x="11" y="1" width="2" height="1" fill="#3a2a52"/><rect x="2" y="2" width="1" height="1" fill="#3a2a52"/><rect x="3" y="2" width="10" height="1" fill="#fff8ee"/><rect x="13" y="2" width="1" height="1" fill="#3a2a52"/><rect x="1" y="3" width="1" height="1" fill="#3a2a52"/><rect x="2" y="3" width="12" height="1" fill="#fff8ee"/><rect x="14" y="3" width="1" height="1" fill="#3a2a52"/><rect x="1" y="4" width="1" height="1" fill="#3a2a52"/><rect x="2" y="4" width="2" height="1" fill="#fff8ee"/><rect x="4" y="4" width="2" height="1" fill="#3a2a52"/><rect x="6" y="4" width="4" height="1" fill="#fff8ee"/><rect x="10" y="4" width="2" height="1" fill="#3a2a52"/><rect x="12" y="4" width="3" height="1" fill="#fff8ee"/><rect x="15" y="4" width="1" height="1" fill="#3a2a52"/><rect x="1" y="5" width="1" height="1" fill="#3a2a52"/><rect x="2" y="5" width="2" height="1" fill="#fff8ee"/><rect x="4" y="5" width="2" height="1" fill="#3a2a52"/><rect x="6" y="5" width="4" height="1" fill="#fff8ee"/><rect x="10" y="5" width="2" height="1" fill="#3a2a52"/><rect x="12" y="5" width="3" height="1" fill="#fff8ee"/><rect x="15" y="5" width="1" height="1" fill="#3a2a52"/><rect x="0" y="6" width="1" height="1" fill="#3a2a52"/><rect x="1" y="6" width="14" height="1" fill="#fff8ee"/><rect x="15" y="6" width="1" height="1" fill="#3a2a52"/><rect x="0" y="7" width="1" height="1" fill="#3a2a52"/><rect x="1" y="7" width="1" height="1" fill="#fff8ee"/><rect x="2" y="7" width="2" height="1" fill="#ff9eb6"/><rect x="4" y="7" width="8" height="1" fill="#fff8ee"/><rect x="12" y="7" width="2" height="1" fill="#ff9eb6"/><rect x="14" y="7" width="1" height="1" fill="#fff8ee"/><rect x="15" y="7" width="1" height="1" fill="#3a2a52"/><rect x="0" y="8" width="1" height="1" fill="#3a2a52"/><rect x="1" y="8" width="6" height="1" fill="#fff8ee"/><rect x="7" y="8" width="2" height="1" fill="#3a2a52"/><rect x="9" y="8" width="6" height="1" fill="#fff8ee"/><rect x="15" y="8" width="1" height="1" fill="#3a2a52"/><rect x="0" y="9" width="1" height="1" fill="#3a2a52"/><rect x="1" y="9" width="14" height="1" fill="#fff8ee"/><rect x="15" y="9" width="1" height="1" fill="#3a2a52"/><rect x="0" y="10" width="1" height="1" fill="#3a2a52"/><rect x="1" y="10" width="14" height="1" fill="#fff8ee"/><rect x="15" y="10" width="1" height="1" fill="#3a2a52"/><rect x="0" y="11" width="1" height="1" fill="#3a2a52"/><rect x="1" y="11" width="14" height="1" fill="#fff8ee"/><rect x="15" y="11" width="1" height="1" fill="#3a2a52"/><rect x="0" y="12" width="1" height="1" fill="#3a2a52"/><rect x="1" y="12" width="14" height="1" fill="#fff8ee"/><rect x="15" y="12" width="1" height="1" fill="#3a2a52"/><rect x="0" y="13" width="1" height="1" fill="#3a2a52"/><rect x="1" y="13" width="14" height="1" fill="#fff8ee"/><rect x="15" y="13" width="1" height="1" fill="#3a2a52"/><rect x="0" y="14" width="2" height="1" fill="#3a2a52"/><rect x="2" y="14" width="2" height="1" fill="#fff8ee"/><rect x="4" y="14" width="2" height="1" fill="#3a2a52"/><rect x="6" y="14" width="2" height="1" fill="#fff8ee"/><rect x="8" y="14" width="2" height="1" fill="#3a2a52"/><rect x="10" y="14" width="2" height="1" fill="#fff8ee"/><rect x="12" y="14" width="2" height="1" fill="#3a2a52"/><rect x="14" y="14" width="2" height="1" fill="#fff8ee"/></svg><span class="ghost-shadow"></span></div>
-    <div class="dialog frame-cream">
-      <p class="dialog-sys">▶ SAVE FILE LOADED — PLAYER FOUND</p>
-      <h1 class="dialog-name"><span id="typed">你好，我是王塨钰</span><span class="cursor" aria-hidden="true">▌</span></h1>
-      <p class="dialog-sub">广告学硕士 · 内容运营 · 互联网梦游者</p>
-      <div class="dialog-chips">
-        <span>#2027届</span><span>#内容运营</span><span>#二次元住民</span><span>#AI实践派</span>
-      </div>
-    </div>
-    <a class="press-start" href="#about">— PRESS START ▼ —</a>
-  </div>
+  <p class="hero-micro">
+    <svg width="12" height="12" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#96a5c6"/><rect x="0" y="4" width="9" height="1" fill="#96a5c6"/></svg>
+    个人主页 · PERSONAL HOMEPAGE
+    <svg width="12" height="12" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#96a5c6"/><rect x="0" y="4" width="9" height="1" fill="#96a5c6"/></svg>
+  </p>
+  <h1 class="hero-name">王塨钰</h1>
+  <p class="hero-roman">WANG GONGYU</p>
+  <p class="hero-sub">内容运营 · 中国传媒大学 广告学硕士在读</p>
+  <a class="hero-mail" href="mailto:gongyuw01@qq.com">
+    <svg width="16" height="12" viewBox="0 0 12 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="12" height="1" fill="#96a5c6"/><rect x="0" y="8" width="12" height="1" fill="#96a5c6"/><rect x="0" y="0" width="1" height="9" fill="#96a5c6"/><rect x="11" y="0" width="1" height="9" fill="#96a5c6"/><rect x="1" y="1" width="1" height="1" fill="#96a5c6"/><rect x="2" y="2" width="1" height="1" fill="#96a5c6"/><rect x="3" y="3" width="1" height="1" fill="#96a5c6"/><rect x="4" y="4" width="1" height="1" fill="#96a5c6"/><rect x="5" y="5" width="2" height="1" fill="#96a5c6"/><rect x="7" y="4" width="1" height="1" fill="#96a5c6"/><rect x="8" y="3" width="1" height="1" fill="#96a5c6"/><rect x="9" y="2" width="1" height="1" fill="#96a5c6"/><rect x="10" y="1" width="1" height="1" fill="#96a5c6"/></svg>
+    gongyuw01@qq.com
+  </a>
+  <a class="scroll-cue" href="#about" aria-label="向下滚动">
+    <span>SCROLL</span>
+    <span class="arr">▼</span>
+  </a>
 </header>
 
 <main>
 
-<!-- ======= ABOUT ======= -->
+<!-- ======= 关于 ======= -->
 <section class="section" id="about">
-  <h2 class="sec-title"><svg class="sparkle" viewBox="0 0 9 9" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="1" height="1" fill="#e8c95a"/><rect x="3" y="1" width="1" height="1" fill="#e8c95a"/><rect x="4" y="1" width="1" height="1" fill="#fff3b0"/><rect x="5" y="1" width="1" height="1" fill="#e8c95a"/><rect x="3" y="2" width="1" height="1" fill="#e8c95a"/><rect x="4" y="2" width="1" height="1" fill="#fff3b0"/><rect x="5" y="2" width="1" height="1" fill="#e8c95a"/><rect x="1" y="3" width="2" height="1" fill="#e8c95a"/><rect x="3" y="3" width="3" height="1" fill="#fff3b0"/><rect x="6" y="3" width="2" height="1" fill="#e8c95a"/><rect x="0" y="4" width="2" height="1" fill="#e8c95a"/><rect x="2" y="4" width="5" height="1" fill="#fff3b0"/><rect x="7" y="4" width="2" height="1" fill="#e8c95a"/><rect x="1" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="5" width="3" height="1" fill="#fff3b0"/><rect x="6" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="6" width="1" height="1" fill="#e8c95a"/><rect x="4" y="6" width="1" height="1" fill="#fff3b0"/><rect x="5" y="6" width="1" height="1" fill="#e8c95a"/><rect x="3" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="7" width="1" height="1" fill="#fff3b0"/><rect x="5" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="8" width="1" height="1" fill="#e8c95a"/></svg> 玩家档案 <em>PROFILE</em></h2>
-  <div class="profile-grid">
-    <div class="frame-dark player-card reveal">
-      <div class="pc-row"><span>名称</span><b>王塨钰</b></div>
-      <div class="pc-row"><span>职业</span><b>内容运营</b></div>
-      <div class="pc-row"><span>等级</span><b>Lv.2027 届硕士在读</b></div>
-      <div class="pc-row"><span>据点</span><b>北京 / 上海</b></div>
-      <div class="pc-row"><span>状态</span><b class="blink-soft">秋招进行中…</b></div>
-      <div class="pc-avatar" aria-hidden="true"><svg id="ghost" viewBox="0 0 17 15" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="0" width="6" height="1" fill="#3a2a52"/><rect x="3" y="1" width="2" height="1" fill="#3a2a52"/><rect x="5" y="1" width="6" height="1" fill="#fff8ee"/><rect x="11" y="1" width="2" height="1" fill="#3a2a52"/><rect x="2" y="2" width="1" height="1" fill="#3a2a52"/><rect x="3" y="2" width="10" height="1" fill="#fff8ee"/><rect x="13" y="2" width="1" height="1" fill="#3a2a52"/><rect x="1" y="3" width="1" height="1" fill="#3a2a52"/><rect x="2" y="3" width="12" height="1" fill="#fff8ee"/><rect x="14" y="3" width="1" height="1" fill="#3a2a52"/><rect x="1" y="4" width="1" height="1" fill="#3a2a52"/><rect x="2" y="4" width="2" height="1" fill="#fff8ee"/><rect x="4" y="4" width="2" height="1" fill="#3a2a52"/><rect x="6" y="4" width="4" height="1" fill="#fff8ee"/><rect x="10" y="4" width="2" height="1" fill="#3a2a52"/><rect x="12" y="4" width="3" height="1" fill="#fff8ee"/><rect x="15" y="4" width="1" height="1" fill="#3a2a52"/><rect x="1" y="5" width="1" height="1" fill="#3a2a52"/><rect x="2" y="5" width="2" height="1" fill="#fff8ee"/><rect x="4" y="5" width="2" height="1" fill="#3a2a52"/><rect x="6" y="5" width="4" height="1" fill="#fff8ee"/><rect x="10" y="5" width="2" height="1" fill="#3a2a52"/><rect x="12" y="5" width="3" height="1" fill="#fff8ee"/><rect x="15" y="5" width="1" height="1" fill="#3a2a52"/><rect x="0" y="6" width="1" height="1" fill="#3a2a52"/><rect x="1" y="6" width="14" height="1" fill="#fff8ee"/><rect x="15" y="6" width="1" height="1" fill="#3a2a52"/><rect x="0" y="7" width="1" height="1" fill="#3a2a52"/><rect x="1" y="7" width="1" height="1" fill="#fff8ee"/><rect x="2" y="7" width="2" height="1" fill="#ff9eb6"/><rect x="4" y="7" width="8" height="1" fill="#fff8ee"/><rect x="12" y="7" width="2" height="1" fill="#ff9eb6"/><rect x="14" y="7" width="1" height="1" fill="#fff8ee"/><rect x="15" y="7" width="1" height="1" fill="#3a2a52"/><rect x="0" y="8" width="1" height="1" fill="#3a2a52"/><rect x="1" y="8" width="6" height="1" fill="#fff8ee"/><rect x="7" y="8" width="2" height="1" fill="#3a2a52"/><rect x="9" y="8" width="6" height="1" fill="#fff8ee"/><rect x="15" y="8" width="1" height="1" fill="#3a2a52"/><rect x="0" y="9" width="1" height="1" fill="#3a2a52"/><rect x="1" y="9" width="14" height="1" fill="#fff8ee"/><rect x="15" y="9" width="1" height="1" fill="#3a2a52"/><rect x="0" y="10" width="1" height="1" fill="#3a2a52"/><rect x="1" y="10" width="14" height="1" fill="#fff8ee"/><rect x="15" y="10" width="1" height="1" fill="#3a2a52"/><rect x="0" y="11" width="1" height="1" fill="#3a2a52"/><rect x="1" y="11" width="14" height="1" fill="#fff8ee"/><rect x="15" y="11" width="1" height="1" fill="#3a2a52"/><rect x="0" y="12" width="1" height="1" fill="#3a2a52"/><rect x="1" y="12" width="14" height="1" fill="#fff8ee"/><rect x="15" y="12" width="1" height="1" fill="#3a2a52"/><rect x="0" y="13" width="1" height="1" fill="#3a2a52"/><rect x="1" y="13" width="14" height="1" fill="#fff8ee"/><rect x="15" y="13" width="1" height="1" fill="#3a2a52"/><rect x="0" y="14" width="2" height="1" fill="#3a2a52"/><rect x="2" y="14" width="2" height="1" fill="#fff8ee"/><rect x="4" y="14" width="2" height="1" fill="#3a2a52"/><rect x="6" y="14" width="2" height="1" fill="#fff8ee"/><rect x="8" y="14" width="2" height="1" fill="#3a2a52"/><rect x="10" y="14" width="2" height="1" fill="#fff8ee"/><rect x="12" y="14" width="2" height="1" fill="#3a2a52"/><rect x="14" y="14" width="2" height="1" fill="#fff8ee"/></svg></div>
-    </div>
-    <div class="trait-list">
-      <div class="frame-dark trait reveal">
-        <h3>◆ 三段运营副本通关</h3>
-        <p>小红书 / 阿里 / 百度，3 段长期互联网运营实习，学习意愿强，能快速上手相关业务。</p>
-      </div>
-      <div class="frame-dark trait reveal">
-        <h3>◆ 内容 SENSE 点满</h3>
-        <p>广告学专业 + 新闻传播理论基础，熟悉主流社媒平台内容生态与用户偏好；2025 年小红书个人账号获赞 7922 个。</p>
-      </div>
-      <div class="frame-dark trait reveal">
-        <h3>◆ AI 实践派</h3>
-        <p>积极拥抱 AI 领域新知识，并结合个人想法实践探索 —— 从 prompt 调试到 AI 内容活动策划。</p>
-      </div>
-      <div class="frame-dark trait reveal">
-        <h3>◆ 靠谱执行</h3>
-        <p>认真负责，具备良好的跨部门沟通能力与执行力。</p>
-      </div>
+  <h2 class="sec-title">
+    <svg width="16" height="16" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#fff"/><rect x="0" y="4" width="9" height="1" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#fff"/></svg>
+    关于我 <em>ABOUT</em>
+  </h2>
+  <div class="sec-rule" aria-hidden="true"></div>
+  <div class="card reveal">
+    <p class="about-text">
+      广告学本硕，拥有 <b>3 段互联网运营实习</b>经历（小红书 / 阿里巴巴 / 百度），学习意愿强，能快速上手相关业务。
+      具备新闻传播理论基础，熟悉主流社媒平台的内容生态、流行趋势与用户偏好，2025 年个人小红书账号获赞 <b>7922</b> 个。
+      对 AI 领域保持好奇，喜欢把新知识、新工具结合自己的想法带进真实业务中实践验证。认真负责，具备良好的跨部门沟通能力与执行力。
+    </p>
+    <div class="stat-row">
+      <div class="stat"><div class="n">3 段</div><div class="l">互联网运营实习</div></div>
+      <div class="stat"><div class="n">7922</div><div class="l">2025 小红书获赞</div></div>
+      <div class="stat"><div class="n">2 所</div><div class="l">双一流高校 · 广告学</div></div>
+      <div class="stat"><div class="n">3 项</div><div class="l">省级以上竞赛奖</div></div>
     </div>
   </div>
 </section>
 
-<!-- ======= EDU ======= -->
+<!-- ======= 教育 ======= -->
 <section class="section" id="edu">
-  <h2 class="sec-title"><svg class="sparkle" viewBox="0 0 9 9" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="1" height="1" fill="#e8c95a"/><rect x="3" y="1" width="1" height="1" fill="#e8c95a"/><rect x="4" y="1" width="1" height="1" fill="#fff3b0"/><rect x="5" y="1" width="1" height="1" fill="#e8c95a"/><rect x="3" y="2" width="1" height="1" fill="#e8c95a"/><rect x="4" y="2" width="1" height="1" fill="#fff3b0"/><rect x="5" y="2" width="1" height="1" fill="#e8c95a"/><rect x="1" y="3" width="2" height="1" fill="#e8c95a"/><rect x="3" y="3" width="3" height="1" fill="#fff3b0"/><rect x="6" y="3" width="2" height="1" fill="#e8c95a"/><rect x="0" y="4" width="2" height="1" fill="#e8c95a"/><rect x="2" y="4" width="5" height="1" fill="#fff3b0"/><rect x="7" y="4" width="2" height="1" fill="#e8c95a"/><rect x="1" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="5" width="3" height="1" fill="#fff3b0"/><rect x="6" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="6" width="1" height="1" fill="#e8c95a"/><rect x="4" y="6" width="1" height="1" fill="#fff3b0"/><rect x="5" y="6" width="1" height="1" fill="#e8c95a"/><rect x="3" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="7" width="1" height="1" fill="#fff3b0"/><rect x="5" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="8" width="1" height="1" fill="#e8c95a"/></svg> 教育背景 <em>EDUCATION</em></h2>
-  <div class="edu-grid">
-    <article class="frame-panel edu-card reveal">
-      <header><b>中国传媒大学</b><span class="tag tag-pink">211 · 双一流</span></header>
-      <p class="edu-major">广告学 · 硕士 <span>广告与品牌学院</span></p>
-      <p class="edu-time">2024.09 — 2027.06 · 北京</p>
-      <div class="edu-courses">
+  <h2 class="sec-title">
+    <svg width="16" height="16" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#fff"/><rect x="0" y="4" width="9" height="1" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#fff"/></svg>
+    教育背景 <em>EDUCATION</em>
+  </h2>
+  <div class="sec-rule" aria-hidden="true"></div>
+  <div class="tl">
+    <div class="tl-item now reveal">
+      <div class="tl-head">
+        <h3>中国传媒大学</h3>
+        <span class="tag">211 · 双一流</span>
+        <span class="tl-time">2024.09 — 2027.06</span>
+      </div>
+      <p class="tl-sub">广告学 · 硕士（在读） · 广告与品牌学院 · 北京</p>
+      <div class="courses">
         <span>消费者专题研究</span><span>数字营销与社会文化</span><span>新媒体营销传播研究</span><span>媒介传播史沿革</span>
       </div>
-    </article>
-    <article class="frame-panel edu-card reveal">
-      <header><b>四川大学</b><span class="tag tag-blue">985 · 211 · 双一流</span></header>
-      <p class="edu-major">广告学 · 本科 <span>文学与新闻学院</span></p>
-      <p class="edu-time">2020.09 — 2024.07 · 成都</p>
-      <div class="edu-courses">
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-head">
+        <h3>四川大学</h3>
+        <span class="tag">985 · 211 · 双一流</span>
+        <span class="tl-time">2020.09 — 2024.07</span>
+      </div>
+      <p class="tl-sub">广告学 · 本科 · 文学与新闻学院 · 成都</p>
+      <div class="courses">
         <span>广告策划</span><span>广告媒体学</span><span>广告文案</span><span>品牌营销</span><span>平面广告设计</span><span>广告摄影</span>
       </div>
-    </article>
+    </div>
   </div>
 </section>
 
-<!-- ======= EXP ======= -->
+<!-- ======= 实习 ======= -->
 <section class="section" id="exp">
-  <h2 class="sec-title"><svg class="sparkle" viewBox="0 0 9 9" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="1" height="1" fill="#e8c95a"/><rect x="3" y="1" width="1" height="1" fill="#e8c95a"/><rect x="4" y="1" width="1" height="1" fill="#fff3b0"/><rect x="5" y="1" width="1" height="1" fill="#e8c95a"/><rect x="3" y="2" width="1" height="1" fill="#e8c95a"/><rect x="4" y="2" width="1" height="1" fill="#fff3b0"/><rect x="5" y="2" width="1" height="1" fill="#e8c95a"/><rect x="1" y="3" width="2" height="1" fill="#e8c95a"/><rect x="3" y="3" width="3" height="1" fill="#fff3b0"/><rect x="6" y="3" width="2" height="1" fill="#e8c95a"/><rect x="0" y="4" width="2" height="1" fill="#e8c95a"/><rect x="2" y="4" width="5" height="1" fill="#fff3b0"/><rect x="7" y="4" width="2" height="1" fill="#e8c95a"/><rect x="1" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="5" width="3" height="1" fill="#fff3b0"/><rect x="6" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="6" width="1" height="1" fill="#e8c95a"/><rect x="4" y="6" width="1" height="1" fill="#fff3b0"/><rect x="5" y="6" width="1" height="1" fill="#e8c95a"/><rect x="3" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="7" width="1" height="1" fill="#fff3b0"/><rect x="5" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="8" width="1" height="1" fill="#e8c95a"/></svg> 实习副本 <em>EXPERIENCE</em></h2>
-  <div class="timeline">
+  <h2 class="sec-title">
+    <svg width="16" height="16" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#fff"/><rect x="0" y="4" width="9" height="1" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#fff"/></svg>
+    实习经历 <em>EXPERIENCE</em>
+  </h2>
+  <div class="sec-rule" aria-hidden="true"></div>
+  <div class="tl">
 
-    <article class="tl-item reveal">
-      <div class="tl-dot" aria-hidden="true"></div>
-      <div class="frame-panel exp-card">
-        <header>
-          <b>小红书 · 内容运营</b>
-          <span class="tag tag-pink">进行中</span>
-        </header>
-        <p class="exp-meta">社区部 / 游戏二次元组 · 2026.03 — 至今 · 北京</p>
-        <div class="metrics">
-          <span><b>51.76亿</b>笔记曝光</span>
-          <span><b>19.03亿</b>阅读数</span>
-          <span><b>41.2%</b>高CES笔记率</span>
-          <span><b>2206</b>万赞笔记</span>
-        </div>
+    <div class="tl-item now reveal">
+      <div class="tl-head">
+        <h3>小红书</h3>
+        <span class="tl-role">内容运营 · 社区部 / 游戏二次元组</span>
+        <span class="tl-time">2026.03 — 至今 · 北京</span>
+      </div>
+      <div class="tl-body">
         <ul>
-          <li>独立负责二次元垂类重点促产活动，完整参与活动策划并跟进落地，促活效应显著，核心指标均显著高于大盘均值；</li>
-          <li>垂类用户心理动因调研 + 热点监控，结合热度趋势针对性推出话题活动；</li>
+          <li><b>独立负责二次元垂类重点促产活动</b>：完整参与活动策划并持续跟进落地，笔记曝光 <b>51.76 亿</b>、阅读 <b>19.03 亿</b>，高 CES 笔记率 <b>41.2%</b>（大盘均值 15%），万赞笔记 <b>2206 篇</b>，均显著高于活动大盘均值。</li>
+          <li>对重点垂类用户进行心理动因调研分析，监控垂类热点事件并结合热度趋势，针对性推出话题活动。</li>
           <li>创作者运营：预埋及打捞合作创作者并提供合作 brief，协同社群宣发，维护重点博主及爆款笔记产出。</li>
         </ul>
-      </div>
-    </article>
-
-    <article class="tl-item reveal">
-      <div class="tl-dot" aria-hidden="true"></div>
-      <div class="frame-panel exp-card">
-        <header>
-          <b>阿里巴巴 · 内容运营</b>
-        </header>
-        <p class="exp-meta">千问 C 端产品部 · 2025.08 — 2026.01 · 北京</p>
-        <div class="metrics">
-          <span><b>95.8w</b>活动DAU峰值</span>
-          <span><b>24.38%</b>用户参与率</span>
-          <span><b>73</b>视频脚本</span>
-          <span><b>1.1w</b>单脚本使用量</span>
+        <div class="tl-stats">
+          <span>曝光 51.76 亿</span><span>阅读 19.03 亿</span><span>高 CES 率 41.2%</span><span>万赞笔记 2206 篇</span>
         </div>
-        <ul>
-          <li>国庆节玩图活动策划与复盘：DAU 峰值 95.8w，参与率 24.38%、创作率 7.39%，显著高于暑期高峰；</li>
-          <li>结合热点策划夸克 / 千问 AI 生图、生视频特效及 prompt 调试，上线玩图模板；</li>
-          <li>负责千问「小剧场」冷启动、跨年干杯主题活动及明星合作推广脚本共 73 支，其中单人视频脚本端内使用量达 1.1w；</li>
-          <li>二次元兴趣用户调研与内容标签体系设计，优化内容推荐机制，为团队决策提供输入。</li>
-        </ul>
       </div>
-    </article>
-
-    <article class="tl-item reveal">
-      <div class="tl-dot" aria-hidden="true"></div>
-      <div class="frame-panel exp-card">
-        <header>
-          <b>百度 · 产品运营</b>
-        </header>
-        <p class="exp-meta">2024.02 — 2024.08 · 北京</p>
-        <div class="metrics">
-          <span><b>1k+</b>文档24h点赞投币</span>
-          <span><b>No.18</b>全公司投币排名</span>
-          <span><b>21篇</b>公众号推文</span>
-        </div>
-        <ul>
-          <li>Comate 文心快码（AI 编程工具）高校地推与产品测评在线活动策划，小红书 / 朋友圈渠道差异化宣传；</li>
-          <li>为如流编写爆款产品文档：上线 24h 点赞投币 1k+，单月文档半年内持续获投币达全公司第 18 名；</li>
-          <li>B 站达人数据分析与筛选投放、测评活动运营、直播策划与执行支持。</li>
-        </ul>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- ======= QUEST ======= -->
-<section class="section" id="quest">
-  <h2 class="sec-title"><svg class="sparkle" viewBox="0 0 9 9" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="1" height="1" fill="#e8c95a"/><rect x="3" y="1" width="1" height="1" fill="#e8c95a"/><rect x="4" y="1" width="1" height="1" fill="#fff3b0"/><rect x="5" y="1" width="1" height="1" fill="#e8c95a"/><rect x="3" y="2" width="1" height="1" fill="#e8c95a"/><rect x="4" y="2" width="1" height="1" fill="#fff3b0"/><rect x="5" y="2" width="1" height="1" fill="#e8c95a"/><rect x="1" y="3" width="2" height="1" fill="#e8c95a"/><rect x="3" y="3" width="3" height="1" fill="#fff3b0"/><rect x="6" y="3" width="2" height="1" fill="#e8c95a"/><rect x="0" y="4" width="2" height="1" fill="#e8c95a"/><rect x="2" y="4" width="5" height="1" fill="#fff3b0"/><rect x="7" y="4" width="2" height="1" fill="#e8c95a"/><rect x="1" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="5" width="3" height="1" fill="#fff3b0"/><rect x="6" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="6" width="1" height="1" fill="#e8c95a"/><rect x="4" y="6" width="1" height="1" fill="#fff3b0"/><rect x="5" y="6" width="1" height="1" fill="#e8c95a"/><rect x="3" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="7" width="1" height="1" fill="#fff3b0"/><rect x="5" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="8" width="1" height="1" fill="#e8c95a"/></svg> 项目任务 <em>QUEST</em></h2>
-  <article class="frame-panel quest-card reveal">
-    <header>
-      <b>「寻找我的发光基因」 HBN 品牌营销策划案</b>
-      <span class="tag tag-gold">负责人 · 第一作者</span>
-    </header>
-    <p class="quest-award">★ 2023 第十五届全国大学生广告艺术大赛 · 四川省一等奖 · 全国优秀奖</p>
-    <ul>
-      <li>针对国货护肤品牌 HBN 设计营销推广策划案，系统性运用商业策划全流程；</li>
-      <li>理论分析：提炼核心策略点，撰写广告长文案导语、宏观环境分析、消费者画像与 SWOT 分析；</li>
-      <li>物料制作：文案整理、策划案排版、海报设计、原创 IP 形象绘制。</li>
-    </ul>
-  </article>
-</section>
-
-<!-- ======= TROPHY ======= -->
-<section class="section" id="trophy">
-  <h2 class="sec-title"><svg class="sparkle" viewBox="0 0 9 9" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="1" height="1" fill="#e8c95a"/><rect x="3" y="1" width="1" height="1" fill="#e8c95a"/><rect x="4" y="1" width="1" height="1" fill="#fff3b0"/><rect x="5" y="1" width="1" height="1" fill="#e8c95a"/><rect x="3" y="2" width="1" height="1" fill="#e8c95a"/><rect x="4" y="2" width="1" height="1" fill="#fff3b0"/><rect x="5" y="2" width="1" height="1" fill="#e8c95a"/><rect x="1" y="3" width="2" height="1" fill="#e8c95a"/><rect x="3" y="3" width="3" height="1" fill="#fff3b0"/><rect x="6" y="3" width="2" height="1" fill="#e8c95a"/><rect x="0" y="4" width="2" height="1" fill="#e8c95a"/><rect x="2" y="4" width="5" height="1" fill="#fff3b0"/><rect x="7" y="4" width="2" height="1" fill="#e8c95a"/><rect x="1" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="5" width="3" height="1" fill="#fff3b0"/><rect x="6" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="6" width="1" height="1" fill="#e8c95a"/><rect x="4" y="6" width="1" height="1" fill="#fff3b0"/><rect x="5" y="6" width="1" height="1" fill="#e8c95a"/><rect x="3" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="7" width="1" height="1" fill="#fff3b0"/><rect x="5" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="8" width="1" height="1" fill="#e8c95a"/></svg> 荣誉成就 <em>TROPHY</em></h2>
-  <div class="trophy-grid">
-    <div class="frame-dark trophy reveal"><i>★</i><div><b>全国大学生广告艺术大赛</b><span>省级一等奖 · 全国优秀奖 · 2023</span></div></div>
-    <div class="frame-dark trophy reveal"><i>★</i><div><b>四川省大学生营销策划大赛</b><span>省级三等奖 · 2022</span></div></div>
-    <div class="frame-dark trophy reveal"><i>★</i><div><b>中国大学生计算机设计大赛</b><span>省级三等奖 · 2022</span></div></div>
-  </div>
-</section>
-
-<!-- ======= SKILL ======= -->
-<section class="section" id="skill">
-  <h2 class="sec-title"><svg class="sparkle" viewBox="0 0 9 9" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="1" height="1" fill="#e8c95a"/><rect x="3" y="1" width="1" height="1" fill="#e8c95a"/><rect x="4" y="1" width="1" height="1" fill="#fff3b0"/><rect x="5" y="1" width="1" height="1" fill="#e8c95a"/><rect x="3" y="2" width="1" height="1" fill="#e8c95a"/><rect x="4" y="2" width="1" height="1" fill="#fff3b0"/><rect x="5" y="2" width="1" height="1" fill="#e8c95a"/><rect x="1" y="3" width="2" height="1" fill="#e8c95a"/><rect x="3" y="3" width="3" height="1" fill="#fff3b0"/><rect x="6" y="3" width="2" height="1" fill="#e8c95a"/><rect x="0" y="4" width="2" height="1" fill="#e8c95a"/><rect x="2" y="4" width="5" height="1" fill="#fff3b0"/><rect x="7" y="4" width="2" height="1" fill="#e8c95a"/><rect x="1" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="5" width="3" height="1" fill="#fff3b0"/><rect x="6" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="6" width="1" height="1" fill="#e8c95a"/><rect x="4" y="6" width="1" height="1" fill="#fff3b0"/><rect x="5" y="6" width="1" height="1" fill="#e8c95a"/><rect x="3" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="7" width="1" height="1" fill="#fff3b0"/><rect x="5" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="8" width="1" height="1" fill="#e8c95a"/></svg> 技能树 <em>SKILLS</em></h2>
-  <div class="frame-panel skill-card reveal">
-    <div class="skill-row"><span class="skill-name">文案撰写</span><div class="bar" data-val="9" aria-label="文案撰写 90%"></div><span class="skill-note">爆款文档 / 推文</span></div>
-    <div class="skill-row"><span class="skill-name">视频剪辑</span><div class="bar" data-val="8" aria-label="视频剪辑 80%"></div><span class="skill-note">Premiere · 剪映</span></div>
-    <div class="skill-row"><span class="skill-name">平面设计</span><div class="bar" data-val="8" aria-label="平面设计 80%"></div><span class="skill-note">Photoshop · Illustrator</span></div>
-    <div class="skill-row"><span class="skill-name">数据分析</span><div class="bar" data-val="7" aria-label="数据分析 70%"></div><span class="skill-note">SQL · Office</span></div>
-    <div class="skill-row"><span class="skill-name">英语</span><div class="bar" data-val="7" aria-label="英语 70%"></div><span class="skill-note">IELTS 6.5 · CET-6</span></div>
-  </div>
-</section>
-
-<!-- ======= CONTACT ======= -->
-<section class="section" id="contact">
-  <h2 class="sec-title"><svg class="sparkle" viewBox="0 0 9 9" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="1" height="1" fill="#e8c95a"/><rect x="3" y="1" width="1" height="1" fill="#e8c95a"/><rect x="4" y="1" width="1" height="1" fill="#fff3b0"/><rect x="5" y="1" width="1" height="1" fill="#e8c95a"/><rect x="3" y="2" width="1" height="1" fill="#e8c95a"/><rect x="4" y="2" width="1" height="1" fill="#fff3b0"/><rect x="5" y="2" width="1" height="1" fill="#e8c95a"/><rect x="1" y="3" width="2" height="1" fill="#e8c95a"/><rect x="3" y="3" width="3" height="1" fill="#fff3b0"/><rect x="6" y="3" width="2" height="1" fill="#e8c95a"/><rect x="0" y="4" width="2" height="1" fill="#e8c95a"/><rect x="2" y="4" width="5" height="1" fill="#fff3b0"/><rect x="7" y="4" width="2" height="1" fill="#e8c95a"/><rect x="1" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="5" width="3" height="1" fill="#fff3b0"/><rect x="6" y="5" width="2" height="1" fill="#e8c95a"/><rect x="3" y="6" width="1" height="1" fill="#e8c95a"/><rect x="4" y="6" width="1" height="1" fill="#fff3b0"/><rect x="5" y="6" width="1" height="1" fill="#e8c95a"/><rect x="3" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="7" width="1" height="1" fill="#fff3b0"/><rect x="5" y="7" width="1" height="1" fill="#e8c95a"/><rect x="4" y="8" width="1" height="1" fill="#e8c95a"/></svg> 建立连接 <em>CONTACT</em></h2>
-  <div class="frame-cream contact-card reveal">
-    <p class="contact-lead">想要一起做梦（工作）吗？</p>
-    <div class="contact-rows">
-      <a class="contact-row" href="mailto:gongyuw01@qq.com"><span class="ck">MAIL</span><b>gongyuw01@qq.com</b></a>
-      <a class="contact-row" href="https://github.com/thelastrealikun" target="_blank" rel="noopener"><span class="ck">GITHUB</span><b>@thelastrealikun</b></a>
-      <div class="contact-row"><span class="ck">BASE</span><b>北京 / 上海</b></div>
     </div>
-    <p class="contact-hint">▶ 通常 24h 内回复 — 梦醒即回</p>
+
+    <div class="tl-item reveal">
+      <div class="tl-head">
+        <h3>阿里巴巴</h3>
+        <span class="tl-role">内容运营 · 千问 C 端产品部</span>
+        <span class="tl-time">2025.08 — 2026.01 · 北京</span>
+      </div>
+      <div class="tl-body">
+        <ul>
+          <li>参与国庆节玩图活动策划并复盘：活动 <b>DAU 峰值 95.8 万</b>，用户参与率 <b>24.38%</b>、创作率 <b>7.39%</b>，显著高于暑期高峰。</li>
+          <li>结合热点策划夸克、千问的 AI 生图 / 生视频特效并调试 prompt，上线玩图模板；负责千问「小剧场」功能冷启动与跨年主题活动、明星合作推广，共产出 <b>73 个视频脚本</b>，其中单个明星合作脚本端内使用量达 <b>1.1 万</b>。</li>
+          <li>开展二次元兴趣用户调研（AI 兴趣内容、端外达人建联、竞品活动拆解）；以端内 AI 模板为出发点构建内容标签体系，优化内容推荐机制。</li>
+        </ul>
+        <div class="tl-stats">
+          <span>DAU 峰值 95.8 万</span><span>参与率 24.38%</span><span>创作率 7.39%</span><span>视频脚本 73 个</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-head">
+        <h3>百度</h3>
+        <span class="tl-role">产品运营</span>
+        <span class="tl-time">2024.02 — 2024.08 · 北京</span>
+      </div>
+      <div class="tl-body">
+        <ul>
+          <li>负责文心快码 Comate（AI 编程工具）高校地推与产品测评在线活动策划：收集竞品资料，设计活动玩法、流程及奖项，并对小红书、朋友圈渠道进行差异化宣传支持。</li>
+          <li>为如流（企业效率平台）撰写趣味产品文档：所有文档上线 <b>24h 内点赞投币 1k+</b>，单月文档半年内持续获投币达<b>全公司第 18 名</b>；独立运营 Comate 公众号，完成推文 <b>21 篇</b>。</li>
+          <li>通过数据分析筛选 B 站 UP 主进行软广投放并邀请参与产品测评，负责合作达人答疑与社群管理；参与策划产品直播并支持执行（物料设计、直播剪辑、控评）。</li>
+        </ul>
+        <div class="tl-stats">
+          <span>24h 点赞投币 1k+</span><span>公众号推文 21 篇</span><span>全司投币 Top 18</span>
+        </div>
+      </div>
+    </div>
+
   </div>
+</section>
+
+<!-- ======= 项目与荣誉 ======= -->
+<section class="section" id="proj">
+  <h2 class="sec-title">
+    <svg width="16" height="16" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#fff"/><rect x="0" y="4" width="9" height="1" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#fff"/></svg>
+    项目与荣誉 <em>PROJECTS</em>
+  </h2>
+  <div class="sec-rule" aria-hidden="true"></div>
+  <div class="card reveal">
+    <div class="tl-head">
+      <h3 style="font-family:var(--px);font-weight:400;font-size:18px;letter-spacing:.08em;color:var(--white)">「寻找我的发光基因」 · HBN 品牌营销策划案</h3>
+      <span class="tag">负责人 · 第一作者</span>
+    </div>
+    <p class="tl-body" style="margin-top:12px">
+      针对国货护肤品牌 HBN 设计的整合营销推广策划案：总结核心策略点，撰写广告长文案导语、宏观环境分析、消费者画像与 SWOT 分析；并负责文案整理、策划案排版、海报设计与原创 IP 形象绘制。获
+      <b>2023 第十五届全国大学生广告艺术大赛 四川省一等奖 · 全国优秀奖</b>。
+    </p>
+    <ul class="award-list">
+      <li><span class="d">2023.09</span><span class="n">全国大学生广告艺术大赛（第十五届）</span><span class="r">省级一等奖 · 全国优秀奖</span></li>
+      <li><span class="d">2022.09</span><span class="n">四川省大学生营销策划大赛（第六届）</span><span class="r">省级三等奖</span></li>
+      <li><span class="d">2022.05</span><span class="n">中国大学生计算机设计大赛（第 15 届）</span><span class="r">省级三等奖</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======= 技能 ======= -->
+<section class="section" id="skill">
+  <h2 class="sec-title">
+    <svg width="16" height="16" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#fff"/><rect x="0" y="4" width="9" height="1" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#fff"/></svg>
+    技能 <em>SKILLS</em>
+  </h2>
+  <div class="sec-rule" aria-hidden="true"></div>
+  <div class="skill-grid reveal">
+    <div class="skill"><span class="k">语言</span><span class="v">IELTS 6.5 · CET-6</span></div>
+    <div class="skill"><span class="k">文案</span><span class="v">文案撰写 · 公众号运营</span></div>
+    <div class="skill"><span class="k">剪辑</span><span class="v">Premiere · 剪映</span></div>
+    <div class="skill"><span class="k">设计</span><span class="v">Photoshop · Illustrator</span></div>
+    <div class="skill"><span class="k">数据</span><span class="v">SQL · Office 系列</span></div>
+  </div>
+</section>
+
+<!-- ======= 联络 ======= -->
+<section class="section" id="contact">
+  <h2 class="sec-title">
+    <svg width="16" height="16" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#fff"/><rect x="0" y="4" width="9" height="1" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#fff"/></svg>
+    联络 <em>CONTACT</em>
+  </h2>
+  <div class="sec-rule" aria-hidden="true"></div>
+  <div class="card contact-box reveal">
+    <a class="contact-mail" href="mailto:gongyuw01@qq.com">
+      <svg width="20" height="15" viewBox="0 0 12 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="12" height="1" fill="#fff"/><rect x="0" y="8" width="12" height="1" fill="#fff"/><rect x="0" y="0" width="1" height="9" fill="#fff"/><rect x="11" y="0" width="1" height="9" fill="#fff"/><rect x="1" y="1" width="1" height="1" fill="#fff"/><rect x="2" y="2" width="1" height="1" fill="#fff"/><rect x="3" y="3" width="1" height="1" fill="#fff"/><rect x="4" y="4" width="1" height="1" fill="#fff"/><rect x="5" y="5" width="2" height="1" fill="#fff"/><rect x="7" y="4" width="1" height="1" fill="#fff"/><rect x="8" y="3" width="1" height="1" fill="#fff"/><rect x="9" y="2" width="1" height="1" fill="#fff"/><rect x="10" y="1" width="1" height="1" fill="#fff"/></svg>
+      gongyuw01@qq.com
+    </a>
+    <p class="contact-note">意向城市：北京 / 上海 · 欢迎邮件联系</p>
+  </div>
+
+  <footer class="footer">
+    <span class="px">© 2026 王塨钰 · 以深蓝、暗灰与纯白绘制的像素夜空</span>
+    <span><a href="https://github.com/thelastrealikun" rel="noopener">github.com/thelastrealikun</a></span>
+  </footer>
 </section>
 
 </main>
 
-<footer class="footer">
-  <p class="footer-heart"><svg class="heart" viewBox="0 0 7 6" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="0" width="2" height="1" fill="#c25e7e"/><rect x="4" y="0" width="2" height="1" fill="#c25e7e"/><rect x="0" y="1" width="2" height="1" fill="#c25e7e"/><rect x="2" y="1" width="1" height="1" fill="#ff9eb6"/><rect x="3" y="1" width="1" height="1" fill="#c25e7e"/><rect x="4" y="1" width="1" height="1" fill="#ff9eb6"/><rect x="5" y="1" width="2" height="1" fill="#c25e7e"/><rect x="0" y="2" width="1" height="1" fill="#c25e7e"/><rect x="1" y="2" width="5" height="1" fill="#ff9eb6"/><rect x="6" y="2" width="1" height="1" fill="#c25e7e"/><rect x="1" y="3" width="1" height="1" fill="#c25e7e"/><rect x="2" y="3" width="3" height="1" fill="#ff9eb6"/><rect x="5" y="3" width="1" height="1" fill="#c25e7e"/><rect x="2" y="4" width="1" height="1" fill="#c25e7e"/><rect x="3" y="4" width="1" height="1" fill="#ff9eb6"/><rect x="4" y="4" width="1" height="1" fill="#c25e7e"/><rect x="3" y="5" width="1" height="1" fill="#c25e7e"/></svg></p>
-  <p>© 2026 王塨钰 · 由像素与梦境构成</p>
-  <p class="footer-sub">PIXEL FONT: 缝合像素 FUSION PIXEL (OFL) · NO TRACKERS, ONLY DREAMS</p>
-  <p class="footer-hint" aria-hidden="true">↑↑↓↓←→←→BA ?</p>
-</footer>
+<script>
+(function(){
+'use strict';
+var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<div id="toast" role="status" aria-live="polite"></div>
+/* ================= 工具 ================= */
+var BAYER = [[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]];
+function bth(x,y){ return (BAYER[y&3][x&3]+0.5)/16; }
+function hex(c){ return [parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)]; }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function mix(c1,c2,t){ return [lerp(c1[0],c2[0],t)|0, lerp(c1[1],c2[1],t)|0, lerp(c1[2],c2[2],t)|0]; }
+function hash(x,y){ var h=(x*374761393+y*668265263)|0; h=(h^(h>>13))|0; h=(h*1274126177)|0; return ((h^(h>>16))>>>0)/4294967295; }
 
-<script src="script.js"></script>
+/* ================= 夜空画布 ================= */
+var PIX = 3;                 /* 1 个缓冲像素 = 3 个 CSS 像素，颗粒可见 */
+var sky = document.getElementById('sky');
+var sctx = sky.getContext('2d');
+var W=0, H=0;                /* 缓冲分辨率 */
+var staticCv = document.createElement('canvas');
+var moonSprite = null, moonX=0, moonY=0, moonR=0;
+var clouds = [];             /* {cv,x,y,sp} */
+var stars = [];              /* 十字星芒 {x,y,size,phase,speed,glow} */
+
+/* 夜幕色带：仅用深蓝灰 */
+var SKY_STOPS = [
+  [0.00,'#060a14'],
+  [0.42,'#0b1120'],
+  [0.72,'#121b31'],
+  [1.00,'#182645']
+];
+var PAL = (function(){
+  var n=56, out=[], i;
+  for(i=0;i<n;i++){
+    var t=i/(n-1), s=0;
+    while(s<SKY_STOPS.length-2 && t>SKY_STOPS[s+1][0]) s++;
+    var a=SKY_STOPS[s], b=SKY_STOPS[s+1];
+    var lt=(t-a[0])/(b[0]-a[0]);
+    out.push(mix(hex(a[1]),hex(b[1]),Math.max(0,Math.min(1,lt))));
+  }
+  return out;
+})();
+
+function buildStatic(){
+  staticCv.width=W; staticCv.height=H;
+  var c=staticCv.getContext('2d');
+  var img=c.createImageData(W,H), d=img.data, x, y, i;
+  for(y=0;y<H;y++){
+    var f=(y/(H-1))*(PAL.length-1), i0=Math.floor(f), fr=f-i0;
+    if(i0>=PAL.length-1){ i0=PAL.length-2; fr=1; }
+    var A=PAL[i0], B=PAL[i0+1];
+    for(x=0;x<W;x++){
+      /* Bayer 有序抖动过渡 */
+      var cc = fr > bth(x,y) ? B : A;
+      i=(y*W+x)*4;
+      d[i]=cc[0]; d[i+1]=cc[1]; d[i+2]=cc[2]; d[i+3]=255;
+    }
+  }
+  /* 细碎暗星：稀疏、克制 */
+  var nStar=Math.floor(W*H*0.0011);
+  var cols=[hex('#4a5b82'),hex('#5d7099'),hex('#7c8fb8'),hex('#a9bad9')];
+  for(var s=0;s<nStar;s++){
+    x=(hash(s,7)*W)|0; y=(hash(s,13)*H)|0;
+    var col=cols[(hash(s,29)*cols.length)|0];
+    i=(y*W+x)*4;
+    d[i]=col[0]; d[i+1]=col[1]; d[i+2]=col[2];
+    if(hash(s,41)>0.86 && x+1<W){ i+=4; d[i]=col[0];d[i+1]=col[1];d[i+2]=col[2]; }
+  }
+  c.putImageData(img,0,0);
+}
+
+function buildMoon(){
+  moonR=Math.max(20,Math.min(44,Math.round(Math.min(W,H)*0.105)));
+  var pad=16, S=(moonR+pad)*2;
+  var cv=document.createElement('canvas'); cv.width=S; cv.height=S;
+  var c=cv.getContext('2d');
+  var img=c.createImageData(S,S), d=img.data, x, y, i;
+  var cx=S/2, cy=S/2;
+  var light=hex('#f4f7ff'), shade=hex('#bfcbe4'), rim=hex('#8b9cc2');
+  /* 环形山：相对坐标 */
+  var craters=[[-0.30,-0.20,0.16],[0.14,-0.36,0.11],[0.32,0.14,0.13],[-0.06,0.34,0.09],[-0.46,0.20,0.075],[0.05,-0.05,0.06]];
+  var Lx=-0.58, Ly=-0.62;
+  for(y=0;y<S;y++) for(x=0;x<S;x++){
+    var dx=x-cx, dy=y-cy, dist=Math.sqrt(dx*dx+dy*dy);
+    i=(y*S+x)*4;
+    if(dist<=moonR){
+      var nx=dx/moonR, ny=dy/moonR;
+      var lum=0.5-0.5*(nx*Lx+ny*Ly);   /* 全月：仅轻微明暗 */
+      var t=Math.min(1,Math.max(0,(lum-0.28)*1.1));
+      var col = t>bth(x,y) ? shade : light;
+      if(dist>moonR-1) col=rim;         /* 边缘描深 */
+      /* 环形山 */
+      for(var k=0;k<craters.length;k++){
+        var cr=craters[k], px=dx-cr[0]*moonR, py=dy-cr[1]*moonR;
+        var cd=Math.sqrt(px*px+py*py), rr=cr[2]*moonR;
+        if(cd<=rr){
+          if(cd>rr-1.1){ col=hex('#93a3c6'); }        /* 坑沿 */
+          else { col = (t+0.12>bth(x,y)) ? hex('#aeb9d6') : hex('#ccd6ec'); }
+        }
+      }
+      d[i]=col[0];d[i+1]=col[1];d[i+2]=col[2];d[i+3]=255;
+    }else if(dist<=moonR+pad){
+      /* 微弱光晕：抖动稀疏点 */
+      var p=(1-(dist-moonR)/pad)*0.85;
+      if(p>bth(x,y)){ d[i]=235;d[i+1]=241;d[i+2]=255;d[i+3]=Math.round(38*p); }
+    }
+  }
+  c.putImageData(img,0,0);
+  moonSprite=cv;
+  moonX=Math.round(W*0.74)-S/2; moonY=Math.round(H*0.26)-S/2;
+  if(moonY<6) moonY=6;
+}
+
+function makeCloud(w,h,blobs,core,edge,alpha){
+  var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+  var c=cv.getContext('2d');
+  var img=c.createImageData(w,h), d=img.data, x, y, i;
+  var C=hex(core), E=hex(edge);
+  for(y=0;y<h;y++) for(x=0;x<w;x++){
+    var den=0;
+    for(var b=0;b<blobs.length;b++){
+      var B=blobs[b], dx=(x-B[0])/B[2], dy=(y-B[1])/B[3];
+      den+=Math.exp(-(dx*dx+dy*dy))*B[4];
+    }
+    den+= (hash(x,y)-0.5)*0.16;
+    /* 抖动晕染：密度与 Bayer 阈值比较，形成朦胧边缘 */
+    if(den > bth(x,y)*1.05){
+      var col = den>0.62 ? C : E;
+      i=(y*w+x)*4;
+      d[i]=col[0];d[i+1]=col[1];d[i+2]=col[2];
+      d[i+3]=Math.round(alpha*Math.min(1,den*1.25)*255);
+    }
+  }
+  c.putImageData(img,0,0);
+  return cv;
+}
+
+function buildClouds(){
+  clouds=[];
+  function blobRow(w,h,n,ry){
+    var out=[];
+    for(var i=0;i<n;i++){
+      out.push([w*(0.12+0.76*i/(n-1)), h*(0.5+(hash(i,w)-0.5)*0.3),
+                w*(0.16+hash(i,h)*0.12), h*(0.5+hash(i+n,w)*0.3)*ry, 0.5+hash(i,n)*0.5]);
+    }
+    return out;
+  }
+  var defs=[
+    {w:Math.round(W*0.34),h:26,x:0.06,y:0.14,sp:1.6,a:0.34,core:'#3d4f7a',edge:'#2b3a5e'},
+    {w:Math.round(W*0.26),h:20,x:0.50,y:0.07,sp:1.1,a:0.26,core:'#35466e',edge:'#273554'},
+    {w:Math.round(W*0.42),h:30,x:0.30,y:0.68,sp:2.3,a:0.30,core:'#3a4c76',edge:'#293757'}
+  ];
+  for(var i=0;i<defs.length;i++){
+    var D=defs[i];
+    clouds.push({
+      cv:makeCloud(Math.max(60,D.w),D.h,blobRow(Math.max(60,D.w),D.h,4,0.8),D.core,D.edge,D.a),
+      x:D.x*W, y:D.y*H, sp:D.sp
+    });
+  }
+}
+
+function buildStars(){
+  stars=[];
+  var n=8, tries=0;
+  while(stars.length<n && tries<400){
+    tries++;
+    var x=(hash(tries,101)*W)|0, y=(hash(tries,103)*H*0.72)|0;
+    var mcx=moonX+moonR+16, mcy=moonY+moonR+16;
+    if(Math.sqrt((x-mcx)*(x-mcx)+(y-mcy)*(y-mcy)) < moonR+34) continue;  /* 避开月球 */
+    var big = stars.length<3;
+    stars.push({
+      x:x, y:y,
+      size: big?2:1,
+      glow: big,
+      phase: hash(tries,107)*6.283,
+      speed: 0.9+hash(tries,109)*1.4
+    });
+  }
+}
+
+function drawCrossStar(c,t,st){
+  var b=0.55+0.45*Math.sin(t*st.speed+st.phase);   /* 明灭闪动 */
+  var L=st.size+1+(b>0.86?1:0);
+  var a=[Math.round(255*b),Math.round(255*b*0.92),Math.round(255*b*0.8)];
+  function px(x,y,alpha,col){
+    if(x<0||y<0||x>=W||y>=H||alpha<=0) return;
+    c.fillStyle=col||('#ffffff');
+    c.globalAlpha=Math.min(1,alpha);
+    c.fillRect(x,y,1,1);
+  }
+  /* 大星：微弱白色光晕（抖动点） */
+  if(st.glow){
+    for(var gy=-4;gy<=4;gy++) for(var gx=-4;gx<=4;gx++){
+      var gd=Math.sqrt(gx*gx+gy*gy);
+      if(gd>1.6 && gd<4.4 && (1-(gd-1.6)/2.8)*b > bth(st.x+gx,st.y+gy)*1.35){
+        px(st.x+gx,st.y+gy,0.14*b,'#e8eeff');
+      }
+    }
+  }
+  /* 十字星芒 */
+  for(var k=1;k<=L;k++){
+    var fa=b*(1-k/(L+1));
+    px(st.x+k,st.y,fa,'#dbe6ff'); px(st.x-k,st.y,fa,'#dbe6ff');
+    px(st.x,st.y+k,fa,'#dbe6ff'); px(st.x,st.y-k,fa,'#dbe6ff');
+  }
+  px(st.x,st.y,Math.min(1,0.75+0.25*b),'#ffffff');
+  if(st.size>1){ px(st.x+1,st.y,b*0.9,'#eef3ff'); px(st.x,st.y+1,b*0.9,'#eef3ff'); px(st.x+1,st.y+1,b*0.85,'#e6edff'); }
+  c.globalAlpha=1;
+}
+
+/* ---- 流星：稀疏的线条状轨迹 ---- */
+var meteors=[];              /* {x,y,vx,vy,born,life,trail} */
+var nextMeteor=2.5;          /* 下一颗流星的出现时刻（秒） */
+
+function spawnMeteor(t){
+  /* 自顶部斜向划过，方向随机 */
+  var fromLeft=Math.random()<0.5;
+  var ang=(22+Math.random()*16)*Math.PI/180;
+  var sp=120+Math.random()*90;
+  var dir=fromLeft?1:-1;
+  meteors.push({
+    x:fromLeft?-14:W+14,
+    y:-6+Math.random()*H*0.26,
+    vx:Math.cos(ang)*sp*dir,
+    vy:Math.sin(ang)*sp,
+    born:t,
+    life:0.9+Math.random()*0.7,
+    trail:9+((Math.random()*8)|0)
+  });
+  nextMeteor=t+4+Math.random()*7;   /* 4~11 秒一颗，保持稀疏 */
+}
+
+function drawMeteors(c,t){
+  for(var i=meteors.length-1;i>=0;i--){
+    var m=meteors[i], age=t-m.born;
+    if(age>m.life){ meteors.splice(i,1); continue; }
+    var hx=m.x+m.vx*age, hy=m.y+m.vy*age;
+    if(hx<-24||hx>W+24||hy>H+24){ meteors.splice(i,1); continue; }
+    var fade=age>m.life-0.35?(m.life-age)/0.35:1;
+    var ul=Math.sqrt(m.vx*m.vx+m.vy*m.vy), ux=m.vx/ul, uy=m.vy/ul;
+    for(var k=0;k<m.trail;k++){
+      var gx=Math.round(hx-ux*k*2), gy=Math.round(hy-uy*k*2);
+      if(gx<-2||gy<-2||gx>W+2||gy>H+2) continue;
+      var a=fade*(1-k/m.trail);
+      if(a<=0.05) continue;
+      c.globalAlpha=a*(k===0?0.95:0.72);
+      c.fillStyle=k<3?'#ffffff':'#c8d6f4';
+      var s2=k===0?2:1;
+      c.fillRect(gx,gy,s2,s2);
+    }
+  }
+  c.globalAlpha=1;
+}
+
+function drawFrame(t){
+  var c=sctx;
+  c.imageSmoothingEnabled=false;
+  c.clearRect(0,0,W,H);
+  c.drawImage(staticCv,0,0);
+  if(moonSprite) c.drawImage(moonSprite,moonX,moonY);
+  /* 云烟缓慢漂移，回绕 */
+  for(var i=0;i<clouds.length;i++){
+    var cl=clouds[i], cw=cl.cv.width;
+    var x=Math.round(((cl.x + (RM?0:t*cl.sp)) % (W+cw) + (W+cw)) % (W+cw) - cw);
+    c.drawImage(cl.cv,x,Math.round(cl.y));
+  }
+  /* 流星：不时稀疏划过 */
+  if(!RM){
+    if(t>=nextMeteor) spawnMeteor(t);
+    drawMeteors(c,t);
+  }
+  for(var s=0;s<stars.length;s++) drawCrossStar(c,t,stars[s]);
+}
+
+function rebuild(){
+  W=Math.max(160,Math.ceil(window.innerWidth/PIX));
+  H=Math.max(120,Math.ceil(window.innerHeight/PIX));
+  sky.width=W; sky.height=H;
+  meteors=[]; nextMeteor=2+Math.random()*3;
+  buildStatic(); buildMoon(); buildClouds(); buildStars();
+  drawFrame(0);
+}
+
+/* ================= 星粒光标特效 ================= */
+var dust=document.getElementById('dust');
+var dctx=dust.getContext('2d');
+var DW=0, DH=0;
+var parts=[];
+var lastX=-1, lastY=-1;
+var P_COLORS=['#ffffff','#dbe6ff','#a9bce0'];
+
+function dustResize(){
+  DW=dust.width=window.innerWidth;
+  DH=dust.height=window.innerHeight;
+}
+function spawn(x,y){
+  if(parts.length>140) return;
+  var n=2+((Math.random()*2)|0);
+  for(var i=0;i<n;i++){
+    var ang=Math.random()*6.283;
+    var sp=26+Math.random()*64;                 /* 短距离飞出 */
+    parts.push({
+      x:x, y:y,
+      vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp,
+      life:0, max:0.32+Math.random()*0.26,
+      size:Math.random()<0.72?2:3,
+      cross:Math.random()<0.16,
+      col:P_COLORS[(Math.random()*P_COLORS.length)|0]
+    });
+  }
+}
+function onMove(x,y){
+  if(lastX<0){ lastX=x; lastY=y; return; }
+  var dx=x-lastX, dy=y-lastY, dist=Math.sqrt(dx*dx+dy*dy);
+  if(dist>7){
+    var steps=Math.min(3,Math.floor(dist/9)+1);
+    for(var s=0;s<steps;s++){
+      spawn(lastX+dx*(s+1)/(steps+1), lastY+dy*(s+1)/(steps+1));
+    }
+    lastX=x; lastY=y;
+  }
+}
+function dustTick(dt){
+  dctx.clearRect(0,0,DW,DH);
+  for(var i=parts.length-1;i>=0;i--){
+    var p=parts[i];
+    p.life+=dt;
+    if(p.life>=p.max){ parts.splice(i,1); continue; }
+    p.x+=p.vx*dt; p.y+=p.vy*dt;
+    var drag=Math.pow(0.90,dt*60);
+    p.vx*=drag; p.vy*=drag;
+    /* 阶梯式透明度，像素感淡出 */
+    var k=1-p.life/p.max;
+    var a=(Math.floor(k*5)/5)*0.9;
+    if(a<=0) continue;
+    var gx=Math.round(p.x/2)*2, gy=Math.round(p.y/2)*2;
+    dctx.globalAlpha=a;
+    dctx.fillStyle=p.col;
+    if(p.cross){
+      dctx.fillRect(gx-2,gy,2,2); dctx.fillRect(gx+2,gy,2,2);
+      dctx.fillRect(gx,gy-2,2,2); dctx.fillRect(gx,gy+2,2,2);
+      dctx.fillRect(gx,gy,2,2);
+    }else{
+      dctx.fillRect(gx,gy,p.size,p.size);
+    }
+  }
+  dctx.globalAlpha=1;
+}
+if(!RM){
+  window.addEventListener('mousemove',function(e){ onMove(e.clientX,e.clientY); },{passive:true});
+  window.addEventListener('touchmove',function(e){
+    if(e.touches.length) onMove(e.touches[0].clientX,e.touches[0].clientY);
+  },{passive:true});
+  dustResize();
+}
+
+/* ================= 主循环 ================= */
+var last=0, acc=0, skyT=0;
+function loop(ts){
+  requestAnimationFrame(loop);
+  var dt=Math.min(0.1,(ts-last)/1000||0.016); last=ts;
+  acc+=dt;
+  if(acc<1/30) return;      /* 30fps 足够，省电 */
+  skyT+=acc; acc=0;
+  drawFrame(skyT);
+  dustTick(dt*2);
+}
+
+/* ================= 入场 reveal ================= */
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+/* ================= 启动 ================= */
+var rzT=null;
+window.addEventListener('resize',function(){
+  clearTimeout(rzT);
+  rzT=setTimeout(function(){ rebuild(); if(!RM) dustResize(); },160);
+});
+rebuild();
+if(RM){ drawFrame(0); }
+else{ requestAnimationFrame(loop); }
+})();
+</script>
 </body>
 </html>

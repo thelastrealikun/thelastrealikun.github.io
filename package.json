@@ -1,8 +1,8 @@
 {
-  "name": "pixel-dream-homepage",
+  "name": "pixel-night-sky-homepage",
   "private": true,
   "version": "1.0.0",
-  "description": "王塨钰的个人主页 —— 像素梦核风格 GitHub Pages",
+  "description": "王塨钰的个人主页 —— 像素夜空风格 GitHub Pages",
   "scripts": {
     "dev": "vite --host 0.0.0.0"
   },
