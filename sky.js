@@ -374,28 +374,27 @@ var io=new IntersectionObserver(function(es){
 },{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-/* ================= 导航「简历介绍」下拉 ================= */
-var navDd=document.getElementById('nav-dd');
-var navDdBtn=document.getElementById('nav-dd-btn');
-if(navDd && navDdBtn){
-  navDdBtn.addEventListener('click',function(e){
-    e.stopPropagation();
-    var open=navDd.classList.toggle('open');
-    navDdBtn.setAttribute('aria-expanded',open?'true':'false');
-  });
-  document.addEventListener('click',function(e){
-    if(!navDd.contains(e.target)){
-      navDd.classList.remove('open');
-      navDdBtn.setAttribute('aria-expanded','false');
-    }
-  });
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){
-      navDd.classList.remove('open');
-      navDdBtn.setAttribute('aria-expanded','false');
+/* ================= 导航下拉（简历介绍 / 作品集） ================= */
+function closeAllDd(except){
+  document.querySelectorAll('.nav-dd.open').forEach(function(o){
+    if(o!==except){
+      o.classList.remove('open');
+      var b=o.querySelector('.nav-dd-btn'); if(b) b.setAttribute('aria-expanded','false');
     }
   });
 }
+document.querySelectorAll('.nav-dd').forEach(function(dd){
+  var btn=dd.querySelector('.nav-dd-btn');
+  if(!btn) return;
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    closeAllDd(dd);
+    var open=dd.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+  });
+});
+document.addEventListener('click',function(){ closeAllDd(null); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAllDd(null); });
 
 /* ================= 启动 ================= */
 var rzT=null;
