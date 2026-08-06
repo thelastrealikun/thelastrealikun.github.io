@@ -126,7 +126,7 @@ function frame(){
   cy+=(ty-cy)*0.11;
   var swayX=Math.sin(t*1.7)*1.6+Math.sin(t*3.9)*0.7;
   var swayY=Math.cos(t*1.3)*1.4+Math.sin(t*4.7)*0.6;
-  candle.style.transform='translate('+(cx-150+swayX)+'px,'+(cy-150+swayY)+'px)';
+  candle.style.transform='translate('+(cx-125+swayX)+'px,'+(cy-125+swayY)+'px)';
   /* 两层文案的遮罩跟随烛光当前位置，光圈与显隐始终同步 */
   wrap.style.setProperty('--mx',(cx+swayX)+'px');
   wrap.style.setProperty('--my',(cy+swayY)+'px');

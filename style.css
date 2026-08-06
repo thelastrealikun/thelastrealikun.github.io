@@ -322,14 +322,14 @@ a:focus-visible,button:focus-visible{outline:2px dashed #dbe6ff;outline-offset:3
   mask-image:radial-gradient(circle 92px at var(--mx,-999px) var(--my,-999px),#000 52%,transparent 74%);
 }
 .hidden-copy p{margin-bottom:.4em}
-/* 烛光：柔和暖白、轻微闪烁、跟随略有拖尾 */
+/* 烛光：冷白柔和、轻微闪烁、跟随略有拖尾，边缘渐隐至全透明 */
 .candle{
-  position:absolute;left:0;top:0;width:300px;height:300px;z-index:1;
+  position:absolute;left:0;top:0;width:250px;height:250px;z-index:1;
   pointer-events:none;opacity:0;transition:opacity .45s;
 }
 .candle-core{
   width:100%;height:100%;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,247,228,.96) 0%,rgba(255,238,205,.72) 30%,rgba(255,219,160,.30) 55%,rgba(255,208,145,.10) 68%,transparent 78%);
+  background:radial-gradient(circle,rgba(243,248,255,.95) 0%,rgba(228,238,255,.60) 32%,rgba(214,229,255,.30) 56%,rgba(202,222,255,.11) 76%,rgba(192,214,255,0) 100%);
   animation:candle-flick 2.6s ease-in-out infinite;
 }
 @keyframes candle-flick{
