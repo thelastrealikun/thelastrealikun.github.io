@@ -401,6 +401,26 @@ document.querySelectorAll('.nav-dd').forEach(function(dd){
 document.addEventListener('click',function(){ closeAllDd(null); });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAllDd(null); });
 
+/* 悬停意图：进入即展开，移出延迟关闭，光标过空隙不掉菜单 */
+if(HOVERABLE){
+  document.querySelectorAll('.nav-dd').forEach(function(dd){
+    var timer=null;
+    var btn=dd.querySelector('.nav-dd-btn');
+    dd.addEventListener('mouseenter',function(){
+      clearTimeout(timer);
+      closeAllDd(dd);
+      dd.classList.add('open');
+      if(btn) btn.setAttribute('aria-expanded','true');
+    });
+    dd.addEventListener('mouseleave',function(){
+      timer=setTimeout(function(){
+        dd.classList.remove('open');
+        if(btn) btn.setAttribute('aria-expanded','false');
+      },280);
+    });
+  });
+}
+
 /* ================= 启动 ================= */
 var rzT=null;
 function scheduleRebuild(){
