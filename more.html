@@ -79,7 +79,7 @@
         <p>圈子多且杂（番剧 / 游戏），目前处于散粉状态，和亲友单机建设 OC 中~</p>
         <p>爱孝的产品是君清 / 祈缘 / 刻海 / 赛提</p>
         <p>如果你也推 黍 / 美树沙耶香 / 芙宁娜 / 温迪 / 清凝 / 缪尔赛思，请和我彻夜长谈😭</p>
-        <p>好想玩 原神 / 崩铁 / 无限暖暖 / 明日方舟 / 星露谷 / 王者荣耀 / 文游 / 解谜 / 模拟经营 / 不种地不是中国人（×）</p>
+        <p>好想玩 原神 / 崩铁 / 无限暖暖 / 明日方舟 / 星露谷 / 王者荣耀 / 模拟经营 / 不种地不是中国人（×）</p>
         <p>我会无条件推荐 来自深渊 / 末日后酒店 / 魔圆 / 奇巧出租车 / 小魔女学园 / 女高中生的虚度日常</p>
       </div>
       <!-- 表层文案：与其他页面正文同字体 -->
@@ -89,20 +89,16 @@
         <p>喜欢宅家，也喜欢随机出现在世界各地</p>
         <p>绘画 / 手工 / 养猫 / 烘焙 / 二次元</p>
         <p>很高兴认识你~</p>
-        <p>gongyuw01@qq.com</p>
+        <p class="s-mail"><svg width="14" height="11" viewBox="0 0 12 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="12" height="1" fill="#96a5c6"/><rect x="0" y="8" width="12" height="1" fill="#96a5c6"/><rect x="0" y="0" width="1" height="9" fill="#96a5c6"/><rect x="11" y="0" width="1" height="9" fill="#96a5c6"/><rect x="1" y="1" width="1" height="1" fill="#96a5c6"/><rect x="2" y="2" width="1" height="1" fill="#96a5c6"/><rect x="3" y="3" width="1" height="1" fill="#96a5c6"/><rect x="4" y="4" width="1" height="1" fill="#96a5c6"/><rect x="5" y="5" width="2" height="1" fill="#96a5c6"/><rect x="7" y="4" width="1" height="1" fill="#96a5c6"/><rect x="8" y="3" width="1" height="1" fill="#96a5c6"/><rect x="9" y="2" width="1" height="1" fill="#96a5c6"/><rect x="10" y="1" width="1" height="1" fill="#96a5c6"/></svg>gongyuw01@qq.com</p>
       </div>
     </div>
 
     <img class="more-img reveal" src="assets/more/photo.webp" width="1200" height="1600" alt="王塨钰的自拍照">
   </div>
 
-  <p class="more-hint">
-    <svg width="12" height="12" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#5d6d92"/><rect x="0" y="4" width="9" height="1" fill="#5d6d92"/></svg>
-    移动光标 —— 烛光照亮的地方，是另一个我
-  </p>
 
   <footer class="footer">
-    <span class="px">© 2026 王塨钰 · 以深蓝、暗灰与纯白绘制的像素夜空</span>
+    <span class="px">© 2026 王塨钰 · 一片关于我的夜空</span>
     <span><a href="index.html">简历介绍</a> · <a href="portfolio.html">作品集</a> · <a href="https://github.com/thelastrealikun" rel="noopener">github</a></span>
   </footer>
 </section>
@@ -126,7 +122,7 @@ function frame(){
   cy+=(ty-cy)*0.11;
   var swayX=Math.sin(t*1.7)*1.6+Math.sin(t*3.9)*0.7;
   var swayY=Math.cos(t*1.3)*1.4+Math.sin(t*4.7)*0.6;
-  candle.style.transform='translate('+(cx-125+swayX)+'px,'+(cy-125+swayY)+'px)';
+  candle.style.transform='translate('+(cx-100+swayX)+'px,'+(cy-100+swayY)+'px)';
   /* 两层文案的遮罩跟随烛光当前位置，光圈与显隐始终同步 */
   wrap.style.setProperty('--mx',(cx+swayX)+'px');
   wrap.style.setProperty('--my',(cy+swayY)+'px');
