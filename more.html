@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>更多的我 · 王塨钰</title>
-<meta name="description" content="王塨钰的个人角落 —— 光圈照亮的另一个我：绘画、游戏、番剧与猫。">
+<meta name="description" content="王塨钰的个人角落 —— 烛光照亮的另一个我：绘画、游戏、番剧与猫。">
 <meta property="og:title" content="王塨钰 · 更多的我">
-<meta property="og:description" content="光圈照亮的另一个我。">
+<meta property="og:description" content="烛光照亮的另一个我。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wanggongyu.cn/more.html">
 <meta property="og:image" content="https://wanggongyu.cn/assets/og-cover.png">
@@ -69,10 +69,10 @@
   <div class="sec-rule" aria-hidden="true"></div>
 
   <div class="more-grid">
-    <div class="scatter-wrap reveal" id="scatter-wrap">
-      <!-- 光标光圈（始终跟随） -->
-      <div class="glow" id="glow" aria-hidden="true"></div>
-      <!-- 隐藏文案：正文字体，深蓝色，仅在光圈内显形 -->
+    <div class="light-wrap reveal" id="light-wrap">
+      <!-- 烛光（始终跟随光标，柔和闪烁） -->
+      <div class="candle" id="candle" aria-hidden="true"><div class="candle-core"></div></div>
+      <!-- 隐藏文案：正文字体、蓝黑色，仅在烛光内显形 -->
       <div class="hidden-copy" id="hidden-copy">
         <p>电波系 IN(F/T)P，时常奇异发言</p>
         <p>游戏低手 / 绘画苦手 / 撸猫魔手 / 懒觉冠军</p>
@@ -82,16 +82,15 @@
         <p>好想玩 原神 / 崩铁 / 无限暖暖 / 明日方舟 / 星露谷 / 王者荣耀 / 文游 / 解谜 / 模拟经营 / 不种地不是中国人（×）</p>
         <p>我会无条件推荐 来自深渊 / 末日后酒店 / 魔圆 / 奇巧出租车 / 小魔女学园 / 女高中生的虚度日常</p>
       </div>
-      <!-- 静态回退（减少动态偏好时显示） -->
-      <div class="surface-static">
-        <p class="s-name">你好！我是王塨钰</p>
+      <!-- 表层文案：与其他页面正文同字体 -->
+      <div class="surface-copy" id="surface-copy">
+        <p class="s-title">你好！我是王塨钰</p>
         <p>目前常驻北京，家乡四川</p>
         <p>喜欢宅家，也喜欢随机出现在世界各地</p>
         <p>绘画 / 手工 / 养猫 / 烘焙 / 二次元</p>
         <p>很高兴认识你~</p>
         <p>gongyuw01@qq.com</p>
       </div>
-      <canvas id="scatter" aria-hidden="true"></canvas>
     </div>
 
     <img class="more-img reveal" src="assets/more/photo.webp" width="1200" height="1600" alt="王塨钰的自拍照">
@@ -99,7 +98,7 @@
 
   <p class="more-hint">
     <svg width="12" height="12" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#5d6d92"/><rect x="0" y="4" width="9" height="1" fill="#5d6d92"/></svg>
-    移动光标 —— 光圈照亮的地方，是另一个我
+    移动光标 —— 烛光照亮的地方，是另一个我
   </p>
 
   <footer class="footer">
@@ -112,127 +111,49 @@
 <script>
 (function(){
 'use strict';
-var wrap=document.getElementById('scatter-wrap');
-var cv=document.getElementById('scatter');
-var glow=document.getElementById('glow');
-var hiddenEl=document.getElementById('hidden-copy');
-if(!wrap||!cv) return;
-var RM=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(RM){ wrap.classList.add('static'); return; }
+var wrap=document.getElementById('light-wrap');
+var candle=document.getElementById('candle');
+if(!wrap||!candle) return;
 
-var ctx=cv.getContext('2d');
-var parts=[], W=0, H=0, mx=-9999, my=-9999, raf=null;
+var tx=-9999, ty=-9999;   /* 目标位置（光标） */
+var cx=-9999, cy=-9999;   /* 烛光当前位置（拖尾跟随） */
+var seen=false, raf=null, t=0;
 
-/* 表层文案：像素粒子拼凑（左对齐、大字号） */
-var LINES=[
-  {t:'你好！我是王塨钰', big:true},
-  {t:'', big:false},
-  {t:'目前常驻北京，家乡四川', big:false},
-  {t:'喜欢宅家，也喜欢随机出现在世界各地', big:false},
-  {t:'绘画 / 手工 / 养猫 / 烘焙 / 二次元', big:false},
-  {t:'', big:false},
-  {t:'很高兴认识你~', big:false},
-  {t:'gongyuw01@qq.com', big:false}
-];
-
-function build(){
-  var r=wrap.getBoundingClientRect();
-  W=cv.width=Math.max(200,Math.round(r.width));
-  H=cv.height=Math.max(200,Math.round(r.height));
-  var small=W<480;
-  var bodySize=small?18:24, nameSize=small?30:48;
-  var SC=2, gap=small?2:3, psize=small?2:3;
-  var lh=bodySize+14, nameLh=nameSize+22, blank=small?14:20;
-
-  var off=document.createElement('canvas'); off.width=W*SC; off.height=H*SC;
-  var oc=off.getContext('2d');
-  oc.fillStyle='#ffffff'; oc.textBaseline='top';
-  var y=34*SC, x=2*SC;
-  LINES.forEach(function(L){
-    if(L.t){
-      oc.font=(L.big?nameSize*SC:bodySize*SC)+'px "Fusion Pixel", monospace';
-      oc.fillText(L.t,x,y);
-      y+=(L.big?nameLh:lh)*SC;
-    }else{
-      y+=blank*SC;
-    }
-  });
-
-  var data=oc.getImageData(0,0,W*SC,H*SC).data;
-  parts=[];
-  for(var yy=0;yy<H*SC;yy+=gap){
-    for(var xx=0;xx<W*SC;xx+=gap){
-      if(data[(yy*W*SC+xx)*4+3]>128){
-        parts.push({
-          hx:xx/SC, hy:yy/SC, x:xx/SC, y:yy/SC, vx:0, vy:0,
-          s:psize, a:1,
-          c:Math.random()<0.12?'#8fa0c8':'#f2f6ff'
-        });
-      }
-    }
-  }
-  draw();
+function frame(){
+  t+=0.016;
+  /* 拖尾跟随 + 轻微摇曳，模拟真实蜡烛 */
+  cx+=(tx-cx)*0.11;
+  cy+=(ty-cy)*0.11;
+  var swayX=Math.sin(t*1.7)*1.6+Math.sin(t*3.9)*0.7;
+  var swayY=Math.cos(t*1.3)*1.4+Math.sin(t*4.7)*0.6;
+  candle.style.transform='translate('+(cx-150+swayX)+'px,'+(cy-150+swayY)+'px)';
+  /* 两层文案的遮罩跟随烛光当前位置，光圈与显隐始终同步 */
+  wrap.style.setProperty('--mx',(cx+swayX)+'px');
+  wrap.style.setProperty('--my',(cy+swayY)+'px');
+  raf=requestAnimationFrame(frame);
 }
 
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  for(var i=0;i<parts.length;i++){
-    var p=parts[i];
-    ctx.globalAlpha=p.a;
-    ctx.fillStyle=p.c;
-    ctx.fillRect(Math.round(p.x),Math.round(p.y),p.s,p.s);
-  }
-  ctx.globalAlpha=1;
-}
-
-var RHOLE=100, RREP=150;
-function tick(){
-  var active=false;
-  ctx.clearRect(0,0,W,H);
-  for(var i=0;i<parts.length;i++){
-    var p=parts[i];
-    var dx=p.x-mx, dy=p.y-my, d2=dx*dx+dy*dy;
-    if(d2<RREP*RREP && d2>0.01){
-      var d=Math.sqrt(d2), f=(1-d/RREP)*4.2;   /* 从真空圈向外飞散 */
-      p.vx+=dx/d*f; p.vy+=dy/d*f;
-    }
-    p.vx+=(p.hx-p.x)*0.02;                     /* 回位弹簧 */
-    p.vy+=(p.hy-p.y)*0.02;
-    p.vx*=0.88; p.vy*=0.88;
-    p.x+=p.vx; p.y+=p.vy;
-    var ddx=p.hx-p.x, ddy=p.hy-p.y;
-    var disp=Math.sqrt(ddx*ddx+ddy*ddy);
-    var dm=Math.sqrt((p.x-mx)*(p.x-mx)+(p.y-my)*(p.y-my));
-    var target=Math.max(0,Math.min(1,(dm-96)/50));  /* 真空圈内粒子隐去 */
-    p.a+=(target-p.a)*0.18;
-    if(disp>0.4||Math.abs(p.vx)+Math.abs(p.vy)>0.05) active=true;
-    ctx.globalAlpha=p.a;
-    ctx.fillStyle=p.c;
-    ctx.fillRect(Math.round(p.x),Math.round(p.y),p.s,p.s);
-  }
-  ctx.globalAlpha=1;
-  raf = active ? requestAnimationFrame(tick) : null;
-}
-function poke(cx,cy){
-  mx=cx; my=cy;
-  glow.style.opacity='1';
-  glow.style.transform='translate('+(mx-130)+'px,'+(my-130)+'px)';
-  hiddenEl.style.setProperty('--mx',mx+'px');
-  hiddenEl.style.setProperty('--my',my+'px');
-  if(!raf) raf=requestAnimationFrame(tick);
+function poke(px,py){
+  tx=px; ty=py;
+  if(!seen){ cx=px; cy=py; seen=true; }   /* 首次直接落位，避免从角落飞入 */
+  candle.style.opacity='1';
+  if(!raf) raf=requestAnimationFrame(frame);
 }
 function leave(){
-  mx=-9999; my=-9999;
-  glow.style.opacity='0';
-  hiddenEl.style.setProperty('--mx','-999px');
-  hiddenEl.style.setProperty('--my','-999px');
-  if(!raf) raf=requestAnimationFrame(tick);
+  candle.style.opacity='0';
+  /* 遮罩移出，隐藏文案熄灭 */
+  wrap.style.setProperty('--mx','-999px');
+  wrap.style.setProperty('--my','-999px');
+  seen=false;
+  if(raf){ cancelAnimationFrame(raf); raf=null; }
 }
+
 window.addEventListener('mousemove',function(e){
   var r=wrap.getBoundingClientRect();
   poke(e.clientX-r.left, e.clientY-r.top);
 },{passive:true});
 document.documentElement.addEventListener('mouseleave',leave);
+window.addEventListener('blur',leave);
 window.addEventListener('touchmove',function(e){
   if(e.touches.length){
     var r=wrap.getBoundingClientRect();
@@ -240,20 +161,6 @@ window.addEventListener('touchmove',function(e){
   }
 },{passive:true});
 window.addEventListener('touchend',leave);
-
-/* 字体就绪后构建粒子；失败则用等宽字体回退 */
-function start(){
-  if(document.fonts && document.fonts.load){
-    document.fonts.load('24px "Fusion Pixel"')
-      .then(function(){ return document.fonts.ready; })
-      .then(build).catch(build);
-  }else{ build(); }
-}
-var rzT=null;
-window.addEventListener('resize',function(){
-  clearTimeout(rzT); rzT=setTimeout(build,180);
-});
-start();
 })();
 </script>
 </body>

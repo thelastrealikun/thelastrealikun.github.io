@@ -301,34 +301,44 @@ a:focus-visible,button:focus-visible{outline:2px dashed #dbe6ff;outline-offset:3
   .masonry{columns:2}
 }
 
-/* ================= 更多的我 ================= */
+/* ================= 更多的我（烛光揭示） ================= */
 .more-grid{display:grid;grid-template-columns:1fr 330px;gap:32px;align-items:start}
 .more-img{display:block;width:100%;height:auto;margin:0}
 
-.scatter-wrap{position:relative;min-height:600px}
-/* 隐藏文案：深蓝色正文，仅在光标光圈内显形 */
+.light-wrap{position:relative;min-height:600px}
+/* 表层文案：与其他页面正文同字体，烛光处镂空 */
+.surface-copy{
+  position:relative;z-index:3;padding-top:8px;
+  color:var(--read);font-size:17px;line-height:2.1;
+  -webkit-mask-image:radial-gradient(circle 92px at var(--mx,-999px) var(--my,-999px),transparent 52%,#000 74%);
+  mask-image:radial-gradient(circle 92px at var(--mx,-999px) var(--my,-999px),transparent 52%,#000 74%);
+}
+.s-title{font-size:30px;color:var(--white);font-weight:600;letter-spacing:2px;margin-bottom:16px;line-height:1.5}
+/* 隐藏文案：正文字体、蓝黑色，仅在烛光内显形 */
 .hidden-copy{
-  position:absolute;inset:0;padding:34px 0 0;z-index:2;
-  color:#22365f;font-size:15px;line-height:2;
-  -webkit-mask-image:radial-gradient(circle 96px at var(--mx,-999px) var(--my,-999px),#000 55%,transparent 76%);
-  mask-image:radial-gradient(circle 96px at var(--mx,-999px) var(--my,-999px),#000 55%,transparent 76%);
+  position:absolute;inset:0;z-index:2;padding-top:8px;
+  color:#132448;font-size:15px;line-height:2;
+  -webkit-mask-image:radial-gradient(circle 92px at var(--mx,-999px) var(--my,-999px),#000 52%,transparent 74%);
+  mask-image:radial-gradient(circle 92px at var(--mx,-999px) var(--my,-999px),#000 52%,transparent 74%);
 }
 .hidden-copy p{margin-bottom:.4em}
-/* 光标光圈：始终跟随 */
-.glow{
-  position:absolute;left:0;top:0;width:260px;height:260px;z-index:1;
-  border-radius:50%;pointer-events:none;opacity:0;transition:opacity .3s;
-  background:radial-gradient(circle,rgba(240,246,255,.94) 0%,rgba(228,238,255,.62) 52%,rgba(244,249,255,.95) 66%,rgba(208,224,255,.32) 76%,transparent 84%);
+/* 烛光：柔和暖白、轻微闪烁、跟随略有拖尾 */
+.candle{
+  position:absolute;left:0;top:0;width:300px;height:300px;z-index:1;
+  pointer-events:none;opacity:0;transition:opacity .45s;
 }
-#scatter{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;z-index:3}
-.surface-static{display:none;padding:34px 0 0}
-.scatter-wrap.static .surface-static{display:block}
-.scatter-wrap.static #scatter,.scatter-wrap.static .glow{display:none}
-.scatter-wrap.static .hidden-copy{
-  position:static;opacity:1;padding:26px 0 0;
-  -webkit-mask-image:none;mask-image:none;color:var(--read);
+.candle-core{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,247,228,.96) 0%,rgba(255,238,205,.72) 30%,rgba(255,219,160,.30) 55%,rgba(255,208,145,.10) 68%,transparent 78%);
+  animation:candle-flick 2.6s ease-in-out infinite;
 }
-.s-name{font-family:var(--px);font-size:36px;color:var(--white);margin-bottom:18px;line-height:1.4}
+@keyframes candle-flick{
+  0%,100%{transform:scale(1);opacity:.95}
+  22%{transform:scale(1.025);opacity:1}
+  45%{transform:scale(.985);opacity:.9}
+  63%{transform:scale(1.02);opacity:.98}
+  82%{transform:scale(.99);opacity:.93}
+}
 .more-hint{color:var(--faint);font-size:13px;letter-spacing:1px;margin-top:14px;display:flex;align-items:center;gap:8px}
 
 @media (max-width:900px){
@@ -336,5 +346,9 @@ a:focus-visible,button:focus-visible{outline:2px dashed #dbe6ff;outline-offset:3
   .more-img{max-width:330px}
 }
 @media (max-width:720px){
-  .scatter-wrap{min-height:540px}
+  .light-wrap{min-height:560px}
+  .surface-copy{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .candle-core{animation:none}
 }
