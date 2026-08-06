@@ -375,6 +375,7 @@ var io=new IntersectionObserver(function(es){
 document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
 /* ================= 导航下拉（简历介绍 / 作品集） ================= */
+var HOVERABLE = window.matchMedia && window.matchMedia('(hover:hover)').matches;
 function closeAllDd(except){
   document.querySelectorAll('.nav-dd.open').forEach(function(o){
     if(o!==except){
@@ -388,6 +389,10 @@ document.querySelectorAll('.nav-dd').forEach(function(dd){
   if(!btn) return;
   btn.addEventListener('click',function(e){
     e.stopPropagation();
+    /* 可悬停设备（鼠标）：悬停已展开菜单，点击页面名直达目标页面顶端 */
+    var href=btn.getAttribute('data-href');
+    if(HOVERABLE && href){ window.location.href=href; return; }
+    /* 触屏设备：点按展开 / 收起下拉 */
     closeAllDd(dd);
     var open=dd.classList.toggle('open');
     btn.setAttribute('aria-expanded',open?'true':'false');
