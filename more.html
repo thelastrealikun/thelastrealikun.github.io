@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>更多的我 · 王塨钰</title>
-<meta name="description" content="王塨钰的个人角落 —— 粒子背后的另一个我：绘画、游戏、番剧与猫。">
+<meta name="description" content="王塨钰的个人角落 —— 光圈照亮的另一个我：绘画、游戏、番剧与猫。">
 <meta property="og:title" content="王塨钰 · 更多的我">
-<meta property="og:description" content="粒子背后的另一个我。">
+<meta property="og:description" content="光圈照亮的另一个我。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wanggongyu.cn/more.html">
 <meta property="og:image" content="https://wanggongyu.cn/assets/og-cover.png">
@@ -69,14 +69,11 @@
   <div class="sec-rule" aria-hidden="true"></div>
 
   <div class="more-grid">
-    <figure class="more-photo reveal">
-      <img src="assets/more/photo.jpg" width="1200" height="1600" alt="王塨钰的自拍照">
-      <figcaption>海边 · 随拍</figcaption>
-    </figure>
-
     <div class="scatter-wrap reveal" id="scatter-wrap">
-      <!-- 隐藏文案：普通正文字体，粒子散开后显现 -->
-      <div class="hidden-copy">
+      <!-- 光标光圈（始终跟随） -->
+      <div class="glow" id="glow" aria-hidden="true"></div>
+      <!-- 隐藏文案：正文字体，深蓝色，仅在光圈内显形 -->
+      <div class="hidden-copy" id="hidden-copy">
         <p>电波系 IN(F/T)P，时常奇异发言</p>
         <p>游戏低手 / 绘画苦手 / 撸猫魔手 / 懒觉冠军</p>
         <p>圈子多且杂（番剧 / 游戏），目前处于散粉状态，和亲友单机建设 OC 中~</p>
@@ -96,11 +93,13 @@
       </div>
       <canvas id="scatter" aria-hidden="true"></canvas>
     </div>
+
+    <img class="more-img reveal" src="assets/more/photo.webp" width="1200" height="1600" alt="王塨钰的自拍照">
   </div>
 
   <p class="more-hint">
     <svg width="12" height="12" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="9" fill="#5d6d92"/><rect x="0" y="4" width="9" height="1" fill="#5d6d92"/></svg>
-    把光标移到文字上 —— 粒子散开后，是另一个我
+    移动光标 —— 光圈照亮的地方，是另一个我
   </p>
 
   <footer class="footer">
@@ -115,6 +114,8 @@
 'use strict';
 var wrap=document.getElementById('scatter-wrap');
 var cv=document.getElementById('scatter');
+var glow=document.getElementById('glow');
+var hiddenEl=document.getElementById('hidden-copy');
 if(!wrap||!cv) return;
 var RM=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(RM){ wrap.classList.add('static'); return; }
@@ -122,7 +123,7 @@ if(RM){ wrap.classList.add('static'); return; }
 var ctx=cv.getContext('2d');
 var parts=[], W=0, H=0, mx=-9999, my=-9999, raf=null;
 
-/* 表层文案：以像素粒子拼凑 */
+/* 表层文案：像素粒子拼凑（左对齐、大字号） */
 var LINES=[
   {t:'你好！我是王塨钰', big:true},
   {t:'', big:false},
@@ -139,22 +140,22 @@ function build(){
   W=cv.width=Math.max(200,Math.round(r.width));
   H=cv.height=Math.max(200,Math.round(r.height));
   var small=W<480;
-  var bodySize=small?12:24, nameSize=small?24:36;
-  var SC=2, gap=small?2:3, psize=small?2:3;   /* 2 倍渲染 + 粒子略大于采样格，笔画更实 */
-  var lh=bodySize+12, nameLh=nameSize+18;
-  var total=0;
-  LINES.forEach(function(L){ total+=L.big?nameLh:lh; });
+  var bodySize=small?18:24, nameSize=small?30:48;
+  var SC=2, gap=small?2:3, psize=small?2:3;
+  var lh=bodySize+14, nameLh=nameSize+22, blank=small?14:20;
 
   var off=document.createElement('canvas'); off.width=W*SC; off.height=H*SC;
   var oc=off.getContext('2d');
   oc.fillStyle='#ffffff'; oc.textBaseline='top';
-  var y=Math.max(16,Math.round((H-total)/2));
+  var y=34*SC, x=2*SC;
   LINES.forEach(function(L){
     if(L.t){
       oc.font=(L.big?nameSize*SC:bodySize*SC)+'px "Fusion Pixel", monospace';
-      oc.fillText(L.t, 30*SC, y*SC);
+      oc.fillText(L.t,x,y);
+      y+=(L.big?nameLh:lh)*SC;
+    }else{
+      y+=blank*SC;
     }
-    y+=L.big?nameLh:lh;
   });
 
   var data=oc.getImageData(0,0,W*SC,H*SC).data;
@@ -184,59 +185,61 @@ function draw(){
   ctx.globalAlpha=1;
 }
 
-var R=72, R2=R*R;
-var hiddenEl=wrap.querySelector('.hidden-copy');
+var RHOLE=100, RREP=150;
 function tick(){
-  var active=false, scattered=0;
+  var active=false;
   ctx.clearRect(0,0,W,H);
   for(var i=0;i<parts.length;i++){
     var p=parts[i];
     var dx=p.x-mx, dy=p.y-my, d2=dx*dx+dy*dy;
-    if(d2<R2 && d2>0.01){
-      var d=Math.sqrt(d2), f=(1-d/R)*3.4;   /* 光标斥力 → 粒子飘散 */
+    if(d2<RREP*RREP && d2>0.01){
+      var d=Math.sqrt(d2), f=(1-d/RREP)*4.2;   /* 从真空圈向外飞散 */
       p.vx+=dx/d*f; p.vy+=dy/d*f;
     }
-    p.vx+=(p.hx-p.x)*0.018;                 /* 回位弹簧 */
-    p.vy+=(p.hy-p.y)*0.018;
+    p.vx+=(p.hx-p.x)*0.02;                     /* 回位弹簧 */
+    p.vy+=(p.hy-p.y)*0.02;
     p.vx*=0.88; p.vy*=0.88;
     p.x+=p.vx; p.y+=p.vy;
     var ddx=p.hx-p.x, ddy=p.hy-p.y;
     var disp=Math.sqrt(ddx*ddx+ddy*ddy);
-    if(disp>26) scattered++;
-    var target=Math.max(0,1-disp/120);      /* 散开时淡出 */
-    p.a+=(target-p.a)*0.16;
+    var dm=Math.sqrt((p.x-mx)*(p.x-mx)+(p.y-my)*(p.y-my));
+    var target=Math.max(0,Math.min(1,(dm-96)/50));  /* 真空圈内粒子隐去 */
+    p.a+=(target-p.a)*0.18;
     if(disp>0.4||Math.abs(p.vx)+Math.abs(p.vy)>0.05) active=true;
     ctx.globalAlpha=p.a;
     ctx.fillStyle=p.c;
     ctx.fillRect(Math.round(p.x),Math.round(p.y),p.s,p.s);
   }
   ctx.globalAlpha=1;
-  /* 粒子散开的比例 → 隐藏文案渐入 */
-  if(hiddenEl && parts.length){
-    hiddenEl.style.opacity=Math.min(1,scattered/parts.length*3).toFixed(2);
-  }
   raf = active ? requestAnimationFrame(tick) : null;
 }
-function poke(x,y){
-  mx=x; my=y;
+function poke(cx,cy){
+  mx=cx; my=cy;
+  glow.style.opacity='1';
+  glow.style.transform='translate('+(mx-130)+'px,'+(my-130)+'px)';
+  hiddenEl.style.setProperty('--mx',mx+'px');
+  hiddenEl.style.setProperty('--my',my+'px');
   if(!raf) raf=requestAnimationFrame(tick);
 }
 function leave(){
   mx=-9999; my=-9999;
+  glow.style.opacity='0';
+  hiddenEl.style.setProperty('--mx','-999px');
+  hiddenEl.style.setProperty('--my','-999px');
   if(!raf) raf=requestAnimationFrame(tick);
 }
-cv.addEventListener('mousemove',function(e){
-  var r=cv.getBoundingClientRect();
+window.addEventListener('mousemove',function(e){
+  var r=wrap.getBoundingClientRect();
   poke(e.clientX-r.left, e.clientY-r.top);
-});
-cv.addEventListener('mouseleave',leave);
-cv.addEventListener('touchmove',function(e){
+},{passive:true});
+document.documentElement.addEventListener('mouseleave',leave);
+window.addEventListener('touchmove',function(e){
   if(e.touches.length){
-    var r=cv.getBoundingClientRect();
+    var r=wrap.getBoundingClientRect();
     poke(e.touches[0].clientX-r.left, e.touches[0].clientY-r.top);
   }
 },{passive:true});
-cv.addEventListener('touchend',leave);
+window.addEventListener('touchend',leave);
 
 /* 字体就绪后构建粒子；失败则用等宽字体回退 */
 function start(){
